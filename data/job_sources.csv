@@ -1,14 +1,14 @@
 company_id,company,status,source_url,method,format,notes
-1,101XP,unknown,,,,
-2,AB Games,unknown,,,,
-3,Amrita Studio,unknown,,,,
-4,AppQuantum,unknown,,,,
-5,Artstorm,unknown,,,,
-6,Ascanio,unknown,,,,
-7,AtentGames,unknown,,,,
-8,AurumDust,unknown,,,,
-9,Awem Games,unknown,,,,
-10,Azur Games,unknown,,,,
+1,101XP,found,https://newcorp.101xp.com/vacancies,html,html_list,Official 101XP vacancies page
+2,AB Games,found,https://ab-games.com/en/,html,html_list,Official site contains career filters and vacancy list
+3,Amrita Studio,found,https://amrita.studio/career,browser,html,Official career URL; anti-bot verification blocks simple HTTP access
+4,AppQuantum,found,https://appquantum.pinpointhq.com/,pinpoint,json_api,Official AppQuantum site links directly to Pinpoint careers
+5,Artstorm,found,https://artstorm.com/en-US/careers,html,html_list,Official careers page with job list and detail pages
+6,Ascanio,unknown,,,,Company appears rebranded as Senera; current job source needs confirmation
+7,AtentGames,not_found,,,,Official site has Work with us text but no vacancy source or careers link found
+8,AurumDust,not_found,,,,Official site has no careers or vacancies source found
+9,Awem Games,found,https://awem.com/careers,html,js_rendered_html,Official careers page; vacancy content appears dynamically rendered
+10,Azur Games,found,https://azurgames.com/ru/jobs/,html,html_list,Official jobs page with filters and vacancy list
 11,Belka Games,unknown,,,,
 12,BIT.GAMES,unknown,,,,
 13,Burny Games,unknown,,,,
