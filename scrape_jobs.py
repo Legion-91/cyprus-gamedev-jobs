@@ -22,7 +22,7 @@ MAX_DETAIL_LINKS = 60
 
 HEADERS = {
     "User-Agent": (
-        "Mozilla/5.0 (compatible; CyprusGamedevJobs/0.4; "
+        "Mozilla/5.0 (compatible; CyprusGamedevJobs/0.5; "
         "+https://github.com/Legion-91/cyprus-gamedev-jobs)"
     )
 }
@@ -36,6 +36,7 @@ JOB_PATH_MARKERS = (
     "/positions/",
     "/opening/",
     "/openings/",
+    "/postings/",
 )
 
 NON_JOB_WORDS = {
@@ -49,16 +50,12 @@ NON_JOB_WORDS = {
     "see all jobs",
     "view all jobs",
     "all jobs",
+    "all vacancies",
+    "all positions",
     "apply",
     "apply now",
     "learn more",
 }
-
-LOCATION_KEYS = (
-    "jobLocation",
-    "jobLocationType",
-    "applicantLocationRequirements",
-)
 
 
 def clean_text(value: str | None) -> str:
@@ -94,6 +91,19 @@ def request(session: requests.Session, url: str) -> requests.Response | None:
 def stable_id(company: str, url: str, title: str) -> str:
     raw = f"{company}\n{normalize_url(url)}\n{clean_text(title).lower()}"
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:24]
+
+
+def is_listing_title(title: str) -> bool:
+    value = clean_text(title).lower().strip(" :|-_")
+    if not value:
+        return True
+    if value in NON_JOB_WORDS:
+        return True
+    if re.fullmatch(r"all\s+(jobs|vacancies|positions)(\s*\d+)?", value):
+        return True
+    if re.fullmatch(r"(jobs|vacancies|positions)\s*\d+", value):
+        return True
+    return False
 
 
 def iter_jsonld_objects(value):
@@ -170,11 +180,13 @@ def jsonld_location(job: dict) -> str:
 
 def job_from_jsonld(company: str, source_url: str, job: dict) -> dict | None:
     title = clean_text(str(job.get("title") or job.get("name") or ""))
-    if not title:
+    if not title or is_listing_title(title):
         return None
 
     url = normalize_url(str(job.get("url") or source_url)) or source_url
-    description = clean_text(BeautifulSoup(str(job.get("description", "")), "html.parser").get_text(" "))
+    description = clean_text(
+        BeautifulSoup(str(job.get("description", "")), "html.parser").get_text(" ")
+    )
 
     hiring = job.get("hiringOrganization")
     hiring_name = ""
@@ -209,8 +221,13 @@ def looks_like_job_detail(url: str, text: str, careers_url: str) -> bool:
     if path == career_path:
         return False
 
-    anchor = clean_text(text).lower()
-    if anchor in NON_JOB_WORDS:
+    if any(part in path for part in ["/filter/", "/category/", "/tag/"]):
+        return False
+    if path.endswith("/apply") or path.endswith("/apply-now"):
+        return False
+
+    anchor = clean_text(text)
+    if is_listing_title(anchor):
         return False
 
     if any(marker in path + "/" for marker in JOB_PATH_MARKERS):
@@ -218,8 +235,7 @@ def looks_like_job_detail(url: str, text: str, careers_url: str) -> bool:
         return len(segments) >= 2
 
     if career_path and path.startswith(career_path + "/"):
-        if len(anchor) >= 4 and anchor not in NON_JOB_WORDS:
-            return True
+        return len(anchor) >= 4 and not is_listing_title(anchor)
 
     return False
 
@@ -245,7 +261,24 @@ def detail_links(html: str, page_url: str, careers_url: str) -> list[tuple[str, 
             score += 30
         if text and 4 <= len(text) <= 120:
             score += 20
-        if any(word in text.lower() for word in ["engineer", "developer", "designer", "artist", "manager", "producer", "analyst", "qa", "marketing", "hr", "writer", "lead", "director"]):
+        if any(
+            word in text.lower()
+            for word in [
+                "engineer",
+                "developer",
+                "designer",
+                "artist",
+                "manager",
+                "producer",
+                "analyst",
+                "qa",
+                "marketing",
+                "hr",
+                "writer",
+                "lead",
+                "director",
+            ]
+        ):
             score += 15
 
         candidates.append((score, url, text))
@@ -254,16 +287,33 @@ def detail_links(html: str, page_url: str, careers_url: str) -> list[tuple[str, 
     return [(url, text) for _, url, text in candidates[:MAX_DETAIL_LINKS]]
 
 
-def fallback_detail_job(company: str, url: str, html: str, anchor_text: str = "") -> dict | None:
+def fallback_detail_job(
+    company: str,
+    url: str,
+    html: str,
+    anchor_text: str = "",
+) -> dict | None:
     soup = BeautifulSoup(html, "html.parser")
     h1 = soup.find("h1")
     title = clean_text(h1.get_text(" ", strip=True) if h1 else "") or clean_text(anchor_text)
 
-    if not title or title.lower() in NON_JOB_WORDS or len(title) > 180:
+    if is_listing_title(title) or len(title) > 180:
         return None
 
     page_text = clean_text(soup.get_text(" ", strip=True))
-    if not any(signal in page_text.lower() for signal in ["apply", "responsibil", "requirements", "what you", "we offer", "about the role", "your tasks", "qualifications"]):
+    if not any(
+        signal in page_text.lower()
+        for signal in [
+            "apply",
+            "responsibil",
+            "requirements",
+            "what you",
+            "we offer",
+            "about the role",
+            "your tasks",
+            "qualifications",
+        ]
+    ):
         return None
 
     location = ""
@@ -297,7 +347,10 @@ def scrape_ashby(company: str, careers_url: str) -> list[dict]:
     if not board:
         return []
 
-    api_url = f"https://api.ashbyhq.com/posting-api/job-board/{board}?includeCompensation=true"
+    api_url = (
+        f"https://api.ashbyhq.com/posting-api/job-board/{board}"
+        "?includeCompensation=true"
+    )
     session = requests.Session()
     response = request(session, api_url)
     if not response:
@@ -312,7 +365,7 @@ def scrape_ashby(company: str, careers_url: str) -> list[dict]:
     for item in payload.get("jobs", []):
         title = clean_text(str(item.get("title", "")))
         url = normalize_url(str(item.get("jobUrl") or item.get("applyUrl") or ""))
-        if not title or not url:
+        if not title or not url or is_listing_title(title):
             continue
         jobs.append(
             {
@@ -323,13 +376,81 @@ def scrape_ashby(company: str, careers_url: str) -> list[dict]:
                 "department": clean_text(str(item.get("department", ""))),
                 "employment_type": clean_text(str(item.get("employmentType", ""))),
                 "url": url,
-                "description": clean_text(BeautifulSoup(str(item.get("descriptionHtml", "")), "html.parser").get_text(" ")),
+                "description": clean_text(
+                    BeautifulSoup(
+                        str(item.get("descriptionHtml", "")), "html.parser"
+                    ).get_text(" ")
+                ),
                 "date_posted": clean_text(str(item.get("publishedAt", ""))),
                 "valid_through": "",
                 "source": "ashby-api",
                 "hiring_organization": company,
             }
         )
+    return jobs
+
+
+def scrape_pinpoint(company: str, careers_url: str) -> list[dict]:
+    parsed = urlparse(careers_url)
+    if not parsed.hostname:
+        return []
+
+    postings_url = f"{parsed.scheme}://{parsed.hostname}/postings.json"
+    session = requests.Session()
+    response = request(session, postings_url)
+    if not response:
+        return []
+
+    try:
+        payload = response.json()
+    except ValueError:
+        return []
+
+    jobs = []
+    for item in payload.get("data", []):
+        title = clean_text(str(item.get("title", "")))
+        url = normalize_url(str(item.get("url", "")))
+        if not title or not url or is_listing_title(title):
+            continue
+
+        location_obj = item.get("location")
+        location = ""
+        if isinstance(location_obj, dict):
+            location = clean_text(str(location_obj.get("name", "")))
+
+        job_obj = item.get("job")
+        department = ""
+        if isinstance(job_obj, dict):
+            department_obj = job_obj.get("department")
+            if isinstance(department_obj, dict):
+                department = clean_text(str(department_obj.get("name", "")))
+
+        description = clean_text(
+            BeautifulSoup(str(item.get("description", "")), "html.parser").get_text(" ")
+        )
+        workplace = clean_text(str(item.get("workplace_type_text", "")))
+        if workplace and workplace.lower() not in location.lower():
+            location = " | ".join(part for part in [location, workplace] if part)
+
+        jobs.append(
+            {
+                "id": stable_id(company, url, title),
+                "company": company,
+                "title": title,
+                "location": location,
+                "department": department,
+                "employment_type": clean_text(
+                    str(item.get("employment_type_text") or item.get("employment_type") or "")
+                ),
+                "url": url,
+                "description": description,
+                "date_posted": "",
+                "valid_through": clean_text(str(item.get("deadline_at", ""))),
+                "source": "pinpoint-json",
+                "hiring_organization": company,
+            }
+        )
+
     return jobs
 
 
@@ -379,11 +500,12 @@ def scrape_generic(company: str, careers_url: str) -> list[dict]:
                 except Exception:
                     continue
 
-    # Some pages discovered from a direct vacancy URL have no listing links.
-    # Treat the source itself as a vacancy only when the page strongly looks like one.
     if not collected:
         fallback = fallback_detail_job(company, final_url, response.text)
-        if fallback and any(marker in urlparse(final_url).path.lower() + "/" for marker in JOB_PATH_MARKERS):
+        if fallback and any(
+            marker in urlparse(final_url).path.lower() + "/"
+            for marker in JOB_PATH_MARKERS
+        ):
             collected[fallback["id"]] = fallback
 
     return list(collected.values())
@@ -395,17 +517,29 @@ def scrape_company(source: dict) -> tuple[list[dict], dict]:
     ats = clean_text(str(source.get("ats", ""))).lower()
 
     if not company or not careers_url:
-        return [], {"company": company, "status": "skipped", "reason": "no-careers-url"}
+        return [], {
+            "company": company,
+            "status": "skipped",
+            "reason": "no-careers-url",
+        }
 
     try:
         if ats == "ashby":
             jobs = scrape_ashby(company, careers_url)
             if not jobs:
                 jobs = scrape_generic(company, careers_url)
+        elif ats == "pinpoint":
+            jobs = scrape_pinpoint(company, careers_url)
+            if not jobs:
+                jobs = scrape_generic(company, careers_url)
         else:
             jobs = scrape_generic(company, careers_url)
     except Exception as exc:
-        return [], {"company": company, "status": "error", "reason": f"{type(exc).__name__}:{exc}"}
+        return [], {
+            "company": company,
+            "status": "error",
+            "reason": f"{type(exc).__name__}:{exc}",
+        }
 
     return jobs, {
         "company": company,
@@ -443,7 +577,11 @@ def main() -> None:
                 jobs, report = future.result()
             except Exception as exc:
                 jobs = []
-                report = {"company": company, "status": "error", "reason": f"{type(exc).__name__}:{exc}"}
+                report = {
+                    "company": company,
+                    "status": "error",
+                    "reason": f"{type(exc).__name__}:{exc}",
+                }
 
             for job in jobs:
                 jobs_by_id[job["id"]] = job
@@ -452,7 +590,10 @@ def main() -> None:
 
     jobs = sorted(
         jobs_by_id.values(),
-        key=lambda row: (row.get("company", "").lower(), row.get("title", "").lower()),
+        key=lambda row: (
+            row.get("company", "").lower(),
+            row.get("title", "").lower(),
+        ),
     )
 
     now = datetime.now(timezone.utc).isoformat()
@@ -461,10 +602,16 @@ def main() -> None:
         "source_count": len(sources),
         "job_count": len(jobs),
         "companies_with_jobs": len({job["company"] for job in jobs}),
-        "sources": sorted(source_reports, key=lambda row: row.get("company", "").lower()),
+        "sources": sorted(
+            source_reports,
+            key=lambda row: row.get("company", "").lower(),
+        ),
         "jobs": jobs,
     }
-    OUTPUT_JSON.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    OUTPUT_JSON.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
 
     fields = [
         "id",
@@ -485,7 +632,10 @@ def main() -> None:
         for job in jobs:
             writer.writerow({field: job.get(field, "") for field in fields})
 
-    print(f"Collected {len(jobs)} jobs from {payload['companies_with_jobs']} companies")
+    print(
+        f"Collected {len(jobs)} jobs from "
+        f"{payload['companies_with_jobs']} companies"
+    )
     print(f"Wrote {OUTPUT_JSON} and {OUTPUT_CSV}")
 
 
