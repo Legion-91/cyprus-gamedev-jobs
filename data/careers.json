@@ -1,11 +1,12 @@
 {
-  "generated_at": "2026-08-24T22:55:18.593458+00:00",
+  "generated_at": "2026-08-24T22:58:03.514585+00:00",
   "studio_count": 82,
   "unique_websites_checked": 79,
   "found": 29,
-  "possible": 17,
-  "not_found": 12,
+  "possible": 15,
+  "not_found": 34,
   "unreachable": 4,
+  "errors": 0,
   "results": [
     {
       "company": "101XP",
@@ -14,13 +15,11 @@
       "website": "https://101xp.com/",
       "domain": "101xp.com",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "AB Games",
@@ -29,10 +28,10 @@
       "website": "https://ab-games.com/",
       "domain": "ab-games.com",
       "careers_url": "https://ab-games.com/jobs/2d-visual-content-maker/",
-      "status": "found",
+      "status": "possible",
       "source_type": "custom",
       "ats": "",
-      "confidence": 68,
+      "confidence": 58,
       "evidence": [
         "homepage-link:Remote Київ Рівне hot 2D / Visual Content Maker",
         "career-like-url"
@@ -45,10 +44,10 @@
       "website": "https://amrita.studio/",
       "domain": "amrita.studio",
       "careers_url": "https://amrita.studio/career",
-      "status": "possible",
+      "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 62,
+      "confidence": 82,
       "evidence": [
         "homepage-link:Career",
         "page:join our team",
@@ -63,13 +62,14 @@
       "domain": "appquantum.com",
       "careers_url": "https://appquantum.pinpointhq.com/",
       "status": "found",
-      "source_type": "custom",
-      "ats": "",
-      "confidence": 89,
+      "source_type": "ats",
+      "ats": "pinpoint",
+      "confidence": 100,
       "evidence": [
         "homepage-link:Careers",
         "page:open positions",
-        "page:view jobs"
+        "page:view jobs",
+        "ats:pinpoint"
       ]
     },
     {
@@ -82,7 +82,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 85,
+      "confidence": 75,
       "evidence": [
         "homepage-link:Careers",
         "career-like-url"
@@ -111,13 +111,11 @@
       "website": "https://atentgames.com/",
       "domain": "atentgames.com",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "AurumDust",
@@ -126,13 +124,11 @@
       "website": "https://aurumdust.com/",
       "domain": "aurumdust.com",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "Awem Games",
@@ -158,13 +154,11 @@
       "website": "https://azurgames.com/",
       "domain": "azurgames.com",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "Belka Games",
@@ -225,7 +219,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 67,
+      "confidence": 87,
       "evidence": [
         "homepage-link:All categories : new",
         "page:open positions",
@@ -242,7 +236,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 79,
+      "confidence": 99,
       "evidence": [
         "homepage-link:Vacancies",
         "page:job openings",
@@ -260,7 +254,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 80,
+      "confidence": 100,
       "evidence": [
         "homepage-link:JOBS",
         "page:job openings",
@@ -289,13 +283,11 @@
       "website": "http://warshift.net/",
       "domain": "warshift.net",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "DEUSCRAFT",
@@ -304,13 +296,11 @@
       "website": "https://www.deuscraft.com/",
       "domain": "deuscraft.com",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "Domini Games",
@@ -319,13 +309,11 @@
       "website": "https://dominigames.com/",
       "domain": "dominigames.com",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "Ducky",
@@ -334,13 +322,11 @@
       "website": "https://playducky.com/",
       "domain": "playducky.com",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "Easybrain (Miniclip)",
@@ -367,13 +353,11 @@
       "website": "http://emotion.mycpanel.rs/",
       "domain": "emotion.mycpanel.rs",
       "careers_url": "",
-      "status": "unreachable",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "homepage-unreachable"
-      ]
+      "evidence": []
     },
     {
       "company": "Eschatology Entertainment",
@@ -382,13 +366,11 @@
       "website": "https://eschatology-entertainment.com/",
       "domain": "eschatology-entertainment.com",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "ESDigital Games",
@@ -397,13 +379,11 @@
       "website": "https://esdigital.games/",
       "domain": "esdigital.games",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "Game Gears (GDEV)",
@@ -437,15 +417,12 @@
       "city": "Paphos",
       "website": "https://gem.capital/",
       "domain": "gem.capital",
-      "careers_url": "https://gem.capital/2025/02/06/join-us-at-the-wn-conference-abu-dhabi-2025/",
-      "status": "possible",
-      "source_type": "custom",
+      "careers_url": "",
+      "status": "not_found",
+      "source_type": "",
       "ats": "",
-      "confidence": 55,
-      "evidence": [
-        "common-path:/join-us",
-        "career-like-url"
-      ]
+      "confidence": 0,
+      "evidence": []
     },
     {
       "company": "Green Grey Holding",
@@ -454,13 +431,11 @@
       "website": "https://greengreyholding.com/",
       "domain": "greengreyholding.com",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "Guli Games",
@@ -472,7 +447,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 80,
+      "confidence": 100,
       "evidence": [
         "homepage-link:Jobs",
         "page:вакансии",
@@ -485,16 +460,12 @@
       "city": "Nicosia",
       "website": "https://herocraft.com/",
       "domain": "herocraft.com",
-      "careers_url": "https://herocraft.com/ru/company/career/",
-      "status": "possible",
-      "source_type": "custom",
+      "careers_url": "",
+      "status": "not_found",
+      "source_type": "",
       "ats": "",
-      "confidence": 62,
-      "evidence": [
-        "homepage-link:Карьера",
-        "page:вакансии",
-        "career-like-url"
-      ]
+      "confidence": 0,
+      "evidence": []
     },
     {
       "company": "HolyDay Studios",
@@ -503,13 +474,11 @@
       "website": "https://www.holydaygames.com",
       "domain": "holydaygames.com",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "Hot Siberians",
@@ -518,13 +487,11 @@
       "website": "https://hotsiberians.com/",
       "domain": "hotsiberians.com",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "Hyperhug",
@@ -553,7 +520,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 68,
+      "confidence": 88,
       "evidence": [
         "homepage-link:jobs",
         "career-like-url"
@@ -581,13 +548,11 @@
       "website": "https://www.lighthour.games/",
       "domain": "lighthour.games",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "Made on Earth Games",
@@ -609,13 +574,11 @@
       "website": "https://mgvc.com/",
       "domain": "mgvc.com",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "MGVC Publishing (My.Games)",
@@ -643,7 +606,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 85,
+      "confidence": 100,
       "evidence": [
         "homepage-link:Careers",
         "career-like-url"
@@ -701,13 +664,13 @@
       "city": "Limassol",
       "website": "https://my.games",
       "domain": "my.games",
-      "careers_url": "https://careers.my.games",
+      "careers_url": "https://my.games/jobs",
       "status": "possible",
       "source_type": "custom",
       "ats": "",
       "confidence": 55,
       "evidence": [
-        "common-path:/careers",
+        "common-path:/jobs",
         "career-like-url"
       ]
     },
@@ -750,7 +713,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 97,
+      "confidence": 100,
       "evidence": [
         "homepage-link:CAREERS",
         "page:join our team",
@@ -790,13 +753,11 @@
       "website": "https://niceplans.studio/",
       "domain": "niceplans.studio",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "Nival",
@@ -823,13 +784,11 @@
       "website": "https://novaassembly.com/",
       "domain": "novaassembly.com",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "Obelisk Studio",
@@ -838,11 +797,13 @@
       "website": "https://obeliskstd.com/",
       "domain": "obeliskstd.com",
       "careers_url": "",
-      "status": "not_found",
+      "status": "unreachable",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": []
+      "evidence": [
+        "homepage-unreachable"
+      ]
     },
     {
       "company": "Outfit7",
@@ -871,7 +832,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 97,
+      "confidence": 100,
       "evidence": [
         "homepage-link:Careers",
         "page:open positions",
@@ -978,7 +939,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 85,
+      "confidence": 100,
       "evidence": [
         "homepage-link:Careers",
         "career-like-url"
@@ -1033,13 +994,11 @@
       "website": "https://reefgames.ltd/",
       "domain": "reefgames.ltd",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "RetroStyle Games",
@@ -1051,7 +1010,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 97,
+      "confidence": 100,
       "evidence": [
         "homepage-link:Careers",
         "page:apply now",
@@ -1147,7 +1106,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 85,
+      "confidence": 100,
       "evidence": [
         "homepage-link:CAREERS",
         "career-like-url"
@@ -1163,7 +1122,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 97,
+      "confidence": 100,
       "evidence": [
         "homepage-link:Careers",
         "page:join our team",
@@ -1180,7 +1139,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 97,
+      "confidence": 100,
       "evidence": [
         "homepage-link:Careers",
         "page:join our team",
@@ -1213,7 +1172,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 80,
+      "confidence": 100,
       "evidence": [
         "homepage-link:Jobs",
         "page:open positions",
@@ -1227,13 +1186,11 @@
       "website": "https://www.veagames.com/",
       "domain": "veagames.com",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "Wargaming Cyprus",
@@ -1245,7 +1202,7 @@
       "status": "found",
       "source_type": "custom",
       "ats": "",
-      "confidence": 97,
+      "confidence": 87,
       "evidence": [
         "homepage-link:Careers",
         "page:job openings",
@@ -1259,13 +1216,11 @@
       "website": "https://weappy-studio.com/",
       "domain": "weappy-studio.com",
       "careers_url": "",
-      "status": "error",
+      "status": "not_found",
       "source_type": "",
       "ats": "",
       "confidence": 0,
-      "evidence": [
-        "error:FeatureNotFound"
-      ]
+      "evidence": []
     },
     {
       "company": "XDevs",
