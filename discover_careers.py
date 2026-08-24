@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import json
 import re
+import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
@@ -19,7 +20,7 @@ TIMEOUT = 12
 
 HEADERS = {
     "User-Agent": (
-        "Mozilla/5.0 (compatible; CyprusGamedevJobs/0.2; "
+        "Mozilla/5.0 (compatible; CyprusGamedevJobs/0.3; "
         "+https://github.com/Legion-91/cyprus-gamedev-jobs)"
     )
 }
@@ -58,13 +59,13 @@ PAGE_SIGNALS = [
     "вакансии",
 ]
 
+# These are safe enough to probe directly. More ambiguous paths such as
+# /join-us are discovered only when they are actually linked by the site.
 COMMON_PATHS = [
     "/careers",
     "/jobs",
     "/vacancies",
     "/career",
-    "/join-us",
-    "/work-with-us",
 ]
 
 ATS_DOMAINS = {
@@ -87,6 +88,7 @@ ATS_DOMAINS = {
     "comeet.com": "comeet",
     "workdayjobs.com": "workday",
     "myworkdayjobs.com": "workday",
+    "pinpointhq.com": "pinpoint",
 }
 
 
@@ -120,12 +122,6 @@ def detect_ats(url: str) -> str | None:
     return None
 
 
-def is_same_site(a: str, b: str) -> bool:
-    ha = host(a)
-    hb = host(b)
-    return bool(ha and hb and (ha == hb or ha.endswith("." + hb) or hb.endswith("." + ha)))
-
-
 def career_score(url: str, anchor: str) -> int:
     value = f"{url} {anchor}".lower().replace("-", " ").replace("_", " ")
     score = 0
@@ -133,13 +129,24 @@ def career_score(url: str, anchor: str) -> int:
         if word in value:
             score += points
 
-    ats = detect_ats(url)
-    if ats:
+    if detect_ats(url):
         score += 45
 
+    parsed = urlparse(url)
+    path = parsed.path.lower().rstrip("/")
+    segments = [segment for segment in path.split("/") if segment]
+
+    # Prefer a listing/root page over a single vacancy URL.
+    if path in {"/careers", "/career", "/jobs", "/vacancies", "/open-positions"}:
+        score += 20
+    elif any(segment in {"career", "careers", "jobs", "vacancies"} for segment in segments):
+        if len(segments) >= 2:
+            score -= 10
+
     lowered = url.lower()
-    if any(bad in lowered for bad in ["privacy", "cookie", "blog", "news", "press", "contact"]):
-        score -= 30
+    if any(bad in lowered for bad in ["privacy", "cookie", "blog", "news", "press", "contact", "/tag/", "/category/"]):
+        score -= 35
+
     return score
 
 
@@ -149,7 +156,7 @@ def page_signal_score(html: str, final_url: str) -> tuple[int, list[str]]:
     title = clean_text(soup.title.get_text(" ", strip=True) if soup.title else "").lower()
     combined = f"{title} {text[:100000]}"
 
-    evidence = []
+    evidence: list[str] = []
     score = 0
 
     for signal in PAGE_SIGNALS:
@@ -180,7 +187,11 @@ def request(session: requests.Session, url: str) -> requests.Response | None:
         if response.status_code >= 400:
             return None
         content_type = response.headers.get("content-type", "").lower()
-        if "text/html" not in content_type and "xml" not in content_type and "text/plain" not in content_type:
+        if (
+            "text/html" not in content_type
+            and "xml" not in content_type
+            and "text/plain" not in content_type
+        ):
             return None
         return response
     except requests.RequestException:
@@ -189,8 +200,8 @@ def request(session: requests.Session, url: str) -> requests.Response | None:
 
 def homepage_candidates(html: str, base_url: str) -> list[tuple[int, str, str]]:
     soup = BeautifulSoup(html, "html.parser")
-    seen = set()
-    candidates = []
+    seen: set[str] = set()
+    candidates: list[tuple[int, str, str]] = []
 
     for link in soup.find_all("a", href=True):
         href = normalize_url(urljoin(base_url, link.get("href", "")))
@@ -204,7 +215,23 @@ def homepage_candidates(html: str, base_url: str) -> list[tuple[int, str, str]]:
             candidates.append((score, href, anchor))
 
     candidates.sort(key=lambda item: item[0], reverse=True)
-    return candidates[:10]
+    return candidates[:12]
+
+
+def extract_sitemap_locations(xml_text: str) -> list[str]:
+    locations: list[str] = []
+    try:
+        root = ET.fromstring(xml_text)
+        for element in root.iter():
+            if element.tag.lower().endswith("loc") and element.text:
+                locations.append(clean_text(element.text))
+    except ET.ParseError:
+        # Some sites serve malformed XML. A small fallback is enough for <loc> values.
+        locations.extend(
+            clean_text(value)
+            for value in re.findall(r"<loc[^>]*>(.*?)</loc>", xml_text, flags=re.I | re.S)
+        )
+    return locations
 
 
 def sitemap_candidates(session: requests.Session, website: str) -> list[str]:
@@ -213,25 +240,39 @@ def sitemap_candidates(session: requests.Session, website: str) -> list[str]:
     if not response:
         return []
 
-    soup = BeautifulSoup(response.text, "xml")
-    urls = []
-    for loc in soup.find_all("loc"):
-        candidate = normalize_url(clean_text(loc.get_text()))
+    urls: list[str] = []
+    for raw in extract_sitemap_locations(response.text):
+        candidate = normalize_url(raw)
         if candidate and career_score(candidate, "") >= 25:
             urls.append(candidate)
 
-    return urls[:10]
+    return urls[:12]
 
 
-def verify_candidate(session: requests.Session, candidate_url: str, base_score: int, reason: str) -> dict | None:
+def verify_candidate(
+    session: requests.Session,
+    candidate_url: str,
+    base_score: int,
+    reason: str,
+) -> dict | None:
     response = request(session, candidate_url)
     if not response:
         return None
 
     final_url = normalize_url(response.url)
     page_score, evidence = page_signal_score(response.text, final_url)
-    total = min(100, base_score + page_score)
 
+    # A guessed root such as /careers that redirects to an unrelated article
+    # should not be accepted merely because the original URL looked career-like.
+    if reason.startswith("common-path:"):
+        final_path = urlparse(final_url).path.lower().rstrip("/")
+        expected = reason.split(":", 1)[1].lower().rstrip("/")
+        if expected and not final_path.endswith(expected):
+            if not detect_ats(final_url) and page_score < 24:
+                return None
+            base_score = max(0, base_score - 20)
+
+    total = min(100, base_score + page_score)
     if total < 45:
         return None
 
@@ -250,24 +291,22 @@ def discover_for_website(website: str) -> dict:
     session = requests.Session()
     website = normalize_url(website)
 
+    empty = {
+        "careers_url": "",
+        "status": "no_website",
+        "source_type": "",
+        "ats": "",
+        "confidence": 0,
+        "evidence": [],
+    }
     if not website:
-        return {
-            "careers_url": "",
-            "status": "no_website",
-            "source_type": "",
-            "ats": "",
-            "confidence": 0,
-            "evidence": [],
-        }
+        return empty
 
     homepage = request(session, website)
     if not homepage:
         return {
-            "careers_url": "",
+            **empty,
             "status": "unreachable",
-            "source_type": "",
-            "ats": "",
-            "confidence": 0,
             "evidence": ["homepage-unreachable"],
         }
 
@@ -305,12 +344,8 @@ def discover_for_website(website: str) -> dict:
         }
 
     return {
-        "careers_url": "",
+        **empty,
         "status": "not_found",
-        "source_type": "",
-        "ats": "",
-        "confidence": 0,
-        "evidence": [],
     }
 
 
@@ -322,8 +357,8 @@ def load_studios() -> list[dict]:
 def main() -> None:
     studios = load_studios()
 
-    websites = []
-    seen = set()
+    websites: list[str] = []
+    seen: set[str] = set()
     for studio in studios:
         website = normalize_url(str(studio.get("website", "")))
         key = host(website) or website
@@ -334,9 +369,12 @@ def main() -> None:
     print(f"Studios: {len(studios)}")
     print(f"Unique websites to inspect: {len(websites)}")
 
-    by_domain = {}
+    by_domain: dict[str, dict] = {}
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        futures = {executor.submit(discover_for_website, website): website for website in websites}
+        futures = {
+            executor.submit(discover_for_website, website): website
+            for website in websites
+        }
         for future in as_completed(futures):
             website = futures[future]
             try:
@@ -348,12 +386,12 @@ def main() -> None:
                     "source_type": "",
                     "ats": "",
                     "confidence": 0,
-                    "evidence": [f"error:{type(exc).__name__}"],
+                    "evidence": [f"error:{type(exc).__name__}:{exc}"],
                 }
             by_domain[host(website)] = result
             print(f"{host(website):35} {result['status']:12} {result['careers_url']}")
 
-    rows = []
+    rows: list[dict] = []
     for studio in studios:
         result = by_domain.get(host(str(studio.get("website", ""))), {})
         rows.append(
@@ -380,10 +418,14 @@ def main() -> None:
         "possible": sum(row["status"] == "possible" for row in rows),
         "not_found": sum(row["status"] == "not_found" for row in rows),
         "unreachable": sum(row["status"] == "unreachable" for row in rows),
+        "errors": sum(row["status"] == "error" for row in rows),
         "results": rows,
     }
 
-    OUTPUT_JSON.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    OUTPUT_JSON.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
 
     csv_fields = [
         "company",
@@ -409,7 +451,8 @@ def main() -> None:
     print(
         "Summary: "
         f"found={payload['found']}, possible={payload['possible']}, "
-        f"not_found={payload['not_found']}, unreachable={payload['unreachable']}"
+        f"not_found={payload['not_found']}, unreachable={payload['unreachable']}, "
+        f"errors={payload['errors']}"
     )
     print(f"Wrote {OUTPUT_JSON} and {OUTPUT_CSV}")
 
