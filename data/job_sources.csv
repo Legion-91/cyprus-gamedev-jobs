@@ -9,18 +9,18 @@ company_id,company,status,source_url,method,format,notes
 8,AurumDust,not_found,,,,Official site has no careers or vacancies source found
 9,Awem Games,found,https://awem.com/careers,html,js_rendered_html,Official careers page; vacancy content appears dynamically rendered
 10,Azur Games,found,https://azurgames.com/ru/jobs/,html,html_list,Official jobs page with filters and vacancy list
-11,Belka Games,unknown,,,,
-12,BIT.GAMES,unknown,,,,
-13,Burny Games,unknown,,,,
-14,Chillbase,unknown,,,,
-15,Colossi Games,unknown,,,,
-16,Critical Reflex,unknown,,,,
-17,Cubic Games (Nexters),unknown,,,,
-18,Cyril Megem (Nominia),unknown,,,,
-19,DEUSCRAFT,unknown,,,,
-20,Domini Games,unknown,,,,
-21,Ducky,unknown,,,,
-22,Easybrain (Miniclip),unknown,,,,
+11,Belka Games,found,https://job-boards.eu.greenhouse.io/tripledotstudios,greenhouse,json_api,Belka says vacancies moved to Tripledot; shared Greenhouse board must be filtered to studio Belka Games
+12,BIT.GAMES,found,https://bit.games/job,html,html_list,Official jobs page
+13,Burny Games,found,https://careers.burny.games/,html,html_list,Official careers site with job openings and detail pages
+14,Chillbase,found,https://chillbase.net/vacancies/,html,html_list,Official vacancies page with filters and detail pages
+15,Colossi Games,found,https://www.colossi.games/vacancies/,html,html_list,Official vacancies page; may legitimately contain no current openings
+16,Critical Reflex,found,https://criticalreflex.bamboohr.com/careers,bamboohr,html_list,Official jobs page links to BambooHR
+17,Cubic Games (Nexters),found,https://cubicgames.com/job/,html,html_list,Official job listing and detail pages
+18,Cyril Megem (Nominia),not_found,,,,Warshift site identifies a one-person developer and exposes contact only; no vacancy source found
+19,DEUSCRAFT,not_found,,,,Official site only asks candidates to email resume and portfolio to HR; no vacancy list source found
+20,Domini Games,not_found,,,,Official site has no careers or vacancies source found
+21,Ducky,not_found,,,,Official playducky.com site has no careers or vacancies source found
+22,Easybrain (Miniclip),found,https://easybrain.com/careers,html,html_list,Official careers page with current job openings and detail pages
 23,Emotion Spark Studio,unknown,,,,
 24,Eschatology Entertainment,unknown,,,,
 25,ESDigital Games,unknown,,,,
