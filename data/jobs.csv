@@ -1,17 +1,7 @@
 id,company,title,location,department,employment_type,url,date_posted,valid_through,source,hiring_organization
+cc6dcbebf20dbae86b5c7708,AppQuantum,3D Playable Ads Developer,Remote | Fully remote,Creatives & Production Department,Full Time,https://appquantum.pinpointhq.com/en/postings/4b45d801-88ba-4787-9afe-a05cb9c0deb2,,None,pinpoint-json,AppQuantum
 4fcb375f6ed270be664258ed,Chillbase,3D Character Artist,,,,https://chillbase.net/vacancies/3d-character-artist-clothes/,,,html-detail,
 bb02a325392fb7ddde33c4e7,Chillbase,3d Vehicle & Weapons Artist,,,,https://chillbase.net/vacancies/3d-vehicle-weapons-artist/,,,html-detail,
-f38793aaac1407ac7a480abe,Chillbase,All Vacancies,,,,https://chillbase.net/vacancies/filter/department-is-marketing/apply/,,,html-detail,
-30b569f3b70ebbd8ff1bd96a,Chillbase,All Vacancies,,,,https://chillbase.net/vacancies/filter/department-is-Development/apply/,,,html-detail,
-b32bd6cc09bc12fd686dbabd,Chillbase,All Vacancies,,,,https://chillbase.net/vacancies/filter/department-is-art/apply/,,,html-detail,
-4264a04f0694e85a5fed128c,Chillbase,All Vacancies,,,,https://chillbase.net/vacancies/filter/department-is-Game-design/apply/,,,html-detail,
-c9fb08ec014b9f7aa55b2605,Chillbase,All Vacancies,,,,https://chillbase.net/vacancies/filter/department-is-Management/apply/,,,html-detail,
-e23f331df47c13bc7583ffee,Chillbase,All Vacancies,,,,https://chillbase.net/vacancies/filter/department-is-Monetization/apply/,,,html-detail,
-cc5fcd652aa204fc81064788,Chillbase,All Vacancies,,,,https://chillbase.net/vacancies/filter/department-is-Community/apply/,,,html-detail,
-d44fb285bb620850cfffe734,Chillbase,All Vacancies,,,,https://chillbase.net/vacancies/filter/department-is-Analytics/apply/,,,html-detail,
-ff489c6caf1ac04d6f690876,Chillbase,All Vacancies,,,,https://chillbase.net/vacancies/filter/department-is-Infrastructure/apply/,,,html-detail,
-44578d6a4f06f42c47bdf941,Chillbase,All Vacancies,,,,https://chillbase.net/vacancies/filter/department-is-Back_office/apply/,,,html-detail,
-eed1128fac276b2d9a3a17b2,Chillbase,All Vacancies,,,,https://chillbase.net/vacancies/filter/department-is-video-production/apply/,,,html-detail,
 2e5ce21a46ee8e4d59384f72,Chillbase,Art Director,,,,https://chillbase.net/vacancies/art-director/,,,html-detail,
 f7de947bbd49e2e92a886926,Chillbase,CGI Artist,,,,https://chillbase.net/vacancies/CGI%20Artist/,,,html-detail,
 01496524d63f021fd98dcbd8,Chillbase,Community Manager (Canada),,,,https://chillbase.net/vacancies/community-manager-canada/,,,html-detail,
@@ -27,6 +17,7 @@ c277e712c21ccd4305b6b5e8,Chillbase,Game Designer (Feature Owner),,,,https://chil
 3d67a0d419d1bce601403681,Chillbase,Game Economy Team Lead,,,,https://chillbase.net/vacancies/game-economy-team-lead/,,,html-detail,
 6074be12685e583cc332b4d9,Chillbase,Gameplay Artist (Video Editor),,,,https://chillbase.net/vacancies/gameplay-artist-video-editor/,,,html-detail,
 e2969632256787297c1df409,Chillbase,Gameplay Content Creator — Social Video (Freelance),,,,https://chillbase.net/vacancies/video-maker-outsource/,,,html-detail,
+d6e3a58c0f29631b35ab0f2b,Chillbase,Graphics Programmer (Unity),,,,https://chillbase.net/vacancies/graphics-programmer/,,,html-detail,
 8de45267cd79aee3e2a7e231,Chillbase,Head of Animation,,,,https://chillbase.net/vacancies/head-of-animation/,,,html-detail,
 348d2344be3b9f0a244114d3,Chillbase,Head of Finance,,,,https://chillbase.net/vacancies/head-of-finance/,,,html-detail,
 a808fb81acf9a3252fae9a13,Chillbase,Head of Narrative,,,,https://chillbase.net/vacancies/head-of-narrative/,,,html-detail,
@@ -44,6 +35,7 @@ e1929fc1ea457e0c9c3c66c7,Chillbase,Narrative Designer (Environment),,,,https://c
 55b9d2f18d32a9a668f7c9c4,Chillbase,Outsource Manager,,,,https://chillbase.net/vacancies/outsource-manager/,,,html-detail,
 c711b53e558ee787c3634495,Chillbase,Playables Developer (Freelance),,,,https://chillbase.net/vacancies/playables-developer-freelance/,,,html-detail,
 259b36320532c8b2226f4f8d,Chillbase,Product Owner Booster,,,,https://chillbase.net/vacancies/product-owner-booster/,,,html-detail,
+09957c7c100b2371f437e0f2,Chillbase,Product Owner Meta,,,,https://chillbase.net/vacancies/product-owner-meta/,,,html-detail,
 fa92111f4df4fd061c2ec9e2,Chillbase,Project Manager Lead,,,,https://chillbase.net/vacancies/pm/,,,html-detail,
 5e5f8f81540dc0574f72c568,Chillbase,QA Engineer,,,,https://chillbase.net/vacancies/qa/,,,html-detail,
 482d3b622be274589664a496,Chillbase,SDET,,,,https://chillbase.net/vacancies/SDET/,,,html-detail,
@@ -51,6 +43,7 @@ fa92111f4df4fd061c2ec9e2,Chillbase,Project Manager Lead,,,,https://chillbase.net
 a90df2a12a90d602074d8ce3,Chillbase,Senior HR BP,,,,https://chillbase.net/vacancies/senior-hr-bp/,,,html-detail,
 8ed3d20ec6441b1585147bcb,Chillbase,Senior Marketing Data Analyst,,,,https://chillbase.net/vacancies/Marketing-Data-Analyst/,,,html-detail,
 294dc9cf87029ec9727ff6bd,Chillbase,Senior User Acquisition Manager,,,,https://chillbase.net/vacancies/senior-user-acquisition-manager/,,,html-detail,
+a5165fc7136a60d3669505cf,Chillbase,System Administrator,,,,https://chillbase.net/vacancies/system-administrator/,,,html-detail,
 3dfc5fd44ac2d772e0eec000,Chillbase,Team Lead Unity Developer,,,,https://chillbase.net/vacancies/team-lead-unity-developer/,,,html-detail,
 b0ec13a07d74afd6eb5c15bd,Chillbase,Technical Artist (Optimization),,,,https://chillbase.net/vacancies/technical-artist-optimization/,,,html-detail,
 ed9e0f798bdc7c0b6b7511a2,Chillbase,Technical Game Designer,,,,https://chillbase.net/vacancies/technical-gd/,,,html-detail,
@@ -59,7 +52,7 @@ eaf6b55deff22d18663e1e6c,Chillbase,UI/UX Designer,,,,https://chillbase.net/vacan
 2ad6ab071c60abba5689e948,Chillbase,Unity Developer,,,,https://chillbase.net/vacancies/unity-developer/,,,html-detail,
 cb387aa9316484b68cf8de96,Chillbase,UX Expert,,,,https://chillbase.net/vacancies/ux-expert/,,,html-detail,
 d1309de1795f62c9985ac8b9,Chillbase,Web/UI/UX Designer,,,,https://chillbase.net/vacancies/web-uiux-designer/,,,html-detail,
-399d5dc812308981fe4e7343,Cubic Games (Nexters),All jobs 0,,,,https://cubicgames.com/job/,,,html-detail,
+1be9a03d7cfedd48a50758ff,Colossi Games,Become part of a colossal team!,,,,https://www.colossi.games/vacancies/,,,html-detail,
 a2f61f224562eeb21d4c6a72,Easybrain (Miniclip),Ads Monetization Manager,,,,https://easybrain.com/careers/vacancy/ads-monetization-manager,,,html-detail,
 36899504dd34c389c1a1538d,Easybrain (Miniclip),Data Scientist,,,,https://easybrain.com/careers/vacancy/data-scientist,,,html-detail,
 ba1db8268e0b8a0e2417c802,Easybrain (Miniclip),Game Designer,,,,https://easybrain.com/careers/vacancy/game-designer,,,html-detail,
@@ -108,12 +101,26 @@ a829dfd137a82f3804b2e647,Outfit7,Senior Game Designer,Home Our work Our story Ca
 4b87ba1f6345ccf3992e6325,Playkot,Senior Backend Developer (PHP),,,,https://playkot.com/vacancy/senior-backend-developer-php,,,html-detail,
 4fb18bfc9110b29f555547c7,Press Fire Games,View Job,,,,https://www.pressfire.com/career/qa,,,html-detail,
 dfd37edc4a655b4f3c38868b,Press Fire Games,View Job,,,,https://www.pressfire.com/career/project,,,html-detail,
+e8e1b567736562f12cb80a7b,RetroStyle Games,2D Animator (Spine / After Effects),"Kyiv, Kyiv Oblast, Ukraine | Ukraine",,FULL_TIME,https://retrostylegames.com/vacancies/2d-animator/,2026-06-09T14:33:48+03:00,2026-10-23T17:22:20+00:00,jsonld,RetroStyle Games
+239690222304451a977a3b30,RetroStyle Games,2D Art Lead,"Kyiv, Kyiv Oblast, Ukraine | Ukraine",,FULL_TIME,https://retrostylegames.com/vacancies/2d-artist-art-lead-social-casino/,2026-07-20T15:09:31+03:00,2026-10-23T17:45:59+00:00,jsonld,RetroStyle Games
+b4e107caef8a199c0ef03f22,RetroStyle Games,2D Artist (Slot Games / iGaming),"Kyiv, Kyiv Oblast, Ukraine | Ukraine",,FULL_TIME,https://retrostylegames.com/vacancies/2d-artist/,2025-11-26T16:22:09+02:00,2026-10-23T17:40:17+00:00,jsonld,RetroStyle Games
+933de51b7a104e8f2e68abb5,RetroStyle Games,2D Casual Artist (Freelance),"Kyiv, Kyiv Oblast, Ukraine | Ukraine",,FULL_TIME,https://retrostylegames.com/vacancies/2d-casual-artist-freelance/,2026-07-23T17:34:30+03:00,2026-10-23T17:42:48+00:00,jsonld,RetroStyle Games
+07d6cde8dd18a86332544beb,RetroStyle Games,3D Animator,"Kyiv, Kyiv Oblast, Ukraine | Ukraine",,FULL_TIME,https://retrostylegames.com/vacancies/3d-animator/,2026-07-23T17:01:54+03:00,2026-10-23T17:47:15+00:00,jsonld,RetroStyle Games
+fc72e9965852ac5db08e0d4d,RetroStyle Games,3D Artist (Senior \ Lead),"Kyiv, Kyiv Oblast, Ukraine | Ukraine",,FULL_TIME,https://retrostylegames.com/vacancies/3d-artist-senior-lead/,2026-07-23T16:57:39+03:00,2026-10-23T17:22:22+00:00,jsonld,RetroStyle Games
+02c6dffa026b2de996ac5bde,RetroStyle Games,Game Designer,"Kyiv, Kyiv Oblast, Ukraine | Ukraine",,FULL_TIME,https://retrostylegames.com/vacancies/game-designer-2/,2026-07-23T16:49:17+03:00,2026-10-23T17:43:18+00:00,jsonld,RetroStyle Games
+63fe911a549926f7bce93256,RetroStyle Games,Internship Project Manager,"Kyiv, Kyiv Oblast, Ukraine | Ukraine",,FULL_TIME,https://retrostylegames.com/vacancies/internship-project-manager/,2025-11-13T19:09:02+02:00,2026-10-23T17:40:06+00:00,jsonld,RetroStyle Games
+bb08541ca26d4c2ee9c8ebc3,RetroStyle Games,Junior 3D Artist,"Kyiv, Kyiv Oblast, Ukraine | Ukraine",,FULL_TIME,https://retrostylegames.com/vacancies/junior-3d-artist/,2026-07-23T16:42:04+03:00,2026-10-23T17:18:27+00:00,jsonld,RetroStyle Games
+91d0a1dc00b7086ad2685c58,RetroStyle Games,Junior Project Manager (Mobile Game Ads),"Kyiv, Kyiv Oblast, Ukraine | Ukraine",,FULL_TIME,https://retrostylegames.com/vacancies/junior-project-manager-mobile-game-ads/,2026-07-23T15:52:40+03:00,2026-10-23T17:15:15+00:00,jsonld,RetroStyle Games
+39aab9b5e415994c3d790bbc,RetroStyle Games,Project Manager,"Kyiv, Kyiv Oblast, Ukraine | Ukraine",,FULL_TIME,https://retrostylegames.com/vacancies/project-manager/,2025-01-17T15:11:27+02:00,2026-10-23T17:34:15+00:00,jsonld,RetroStyle Games
+75e788cebe484f14faa8d9f3,RetroStyle Games,QA Specialist,"Kyiv, Kyiv Oblast, Ukraine | Ukraine",,FULL_TIME,https://retrostylegames.com/vacancies/qa-specialist-gamedev/,2026-06-26T15:07:10+03:00,2026-10-23T17:22:20+00:00,jsonld,RetroStyle Games
+d86d3d5e9872f7d320b054c5,RetroStyle Games,UI Artist (Freelance),"Kyiv, Kyiv Oblast, Ukraine | Ukraine",,FULL_TIME,https://retrostylegames.com/vacancies/ui-artist-freelance/,2026-07-23T17:36:53+03:00,2026-10-23T17:22:13+00:00,jsonld,RetroStyle Games
+388ccdb631a2f5503c5ba4c4,RetroStyle Games,Webmaster (WordPress / Elementor),"Kyiv, Kyiv Oblast, Ukraine | Ukraine",,FULL_TIME,https://retrostylegames.com/vacancies/webmaster/,2026-07-24T16:31:22+03:00,2026-10-23T17:22:22+00:00,jsonld,RetroStyle Games
 5fb61410021da5ffe6d547f5,Team Clout,Ford Keast LLP,,,,https://www.fordkeast.com/careers/we-are-always-looking-for-talented-individuals-to-join-our-team/,,,html-detail,
 627dab9f60c75cd4e2761cce,TrueMyth Games,Game Content Creator Internship,"Limassol, Limassol District, Cyprus",,INTERN,https://www.truemythgames.com/game-content-creator-internship.html,2025-10-23,2026-03-31,jsonld,TrueMyth Games
 a64802496a0d46a19c62ff43,Unfrozen Studios,"If you like making beautiful and challenging games, come join us",,,,https://unfrozen.studio/jobs/,,,html-detail,
 264cedb155a64f7238edbbc4,Wargaming Cyprus,"Armored Vehicle (Historical) Consultant (World of Tanks, PC)",,,,https://wargaming.com/en/careers/vacancy_3458266_belgrade/,,,html-detail,
-1dc2f6be8338dbbc2605119c,Wargaming Cyprus,Art Director (World of Tanks Console),,,,https://wargaming.com/en/careers/vacancy_3481332_nicosia/,,,html-detail,
 6943fb7dcfc7d9dc89c7d890,Wargaming Cyprus,Art Director (World of Tanks Console),,,,https://wargaming.com/en/careers/vacancy_3481332_belgrade/,,,html-detail,
+1dc2f6be8338dbbc2605119c,Wargaming Cyprus,Art Director (World of Tanks Console),,,,https://wargaming.com/en/careers/vacancy_3481332_nicosia/,,,html-detail,
 f48a90e77f1fa99418a60c3c,Wargaming Cyprus,Cinematic Artist (World of Tanks: HEAT),,,,https://wargaming.com/en/careers/vacancy_3488328_nicosia/,,,html-detail,
 b340bc545ea1bcf5feb503f9,Wargaming Cyprus,FAQ,,,,https://wargaming.com/en/faq/,,,html-detail,
 f7449c05edcceea3652318f4,Wargaming Cyprus,"Frontend Developer (Vue 3/JavaScript), World of Warships Franchise",,,,https://wargaming.com/en/careers/vacancy_3500192_belgrade/,,,html-detail,
