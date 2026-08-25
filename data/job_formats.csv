@@ -19,8 +19,8 @@ company_id,company,format_status,list_strategy,item_strategy,id_from,title_from,
 32,HolyDay Studios,ready,html_job_links,detail_page,canonical_url,detail_h1,detail_or_list_location,detail_href,detail_main
 34,Hyperhug,ready,GET https://api.ashbyhq.com/posting-api/job-board/hyperhug,json_object,jobUrl,title,location,jobUrl,descriptionHtml
 35,HypeTrain Digital,ready,html_inline_openings,inline_job_section,source_url#normalized_title,job_heading,job_section_location_or_empty,source_url,job_section_body
-42,Mundfish,ready,html_list_links,detail_page,canonical_url,career_list_title,job_tags_for_location_or_remote,detail_href,detail_main
-43,Mundfish Powerhouse,ready,html_list_links,detail_page,canonical_url,career_list_title,job_tags_for_location_or_remote,detail_href,detail_main
+42,Mundfish,verified_live,GET /en/careers and parse Job list vacancy anchors,title_and_tags_from_list + body_from_detail,detail_url_slug,list_anchor_text_without_hot_and_hash_tags,hash_tags_on_list_or_detail,detail_href,detail_body_after_POSITION_until_CONTACTS
+43,Mundfish Powerhouse,no_vacancy_board,n/a,n/a,n/a,n/a,n/a,n/a,n/a
 44,Murka Games,ready,html_career_cards,detail_page_or_card,canonical_url_or_detail_href,job_heading,job_location,detail_href_or_source_url,detail_main_or_card_body
 45,My.Games,ready,html_list_links,detail_page,job_url_numeric_id,detail_h1,detail_location_or_hub,detail_href,detail_main
 47,Nekki,ready,html_hiring_links,detail_page,canonical_url,detail_h1,detail_or_list_location,detail_href,detail_main
