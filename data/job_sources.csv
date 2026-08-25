@@ -44,19 +44,19 @@ company_id,company,status,source_url,method,format,notes
 43,Mundfish Powerhouse,found,https://mundfish.com/en/careers,html,html_list,Same official organization and domain as Mundfish; no separate Powerhouse hiring source found
 44,Murka Games,found,https://murka.com/#career,html,html_list,Official Murka site contains Career section and vacancy cards
 45,My.Games,found,https://careers.my.games/all,html,html_list,Official MY.GAMES careers site with current vacancy list and detail pages
-46,Narhwal Accelerator,unknown,,,,
-47,Nekki,unknown,,,,
-48,New Folder Games,unknown,,,,
-49,Nexters (GDEV),unknown,,,,
-50,Nice Plans Studio,unknown,,,,
-51,Nival,unknown,,,,
-52,Nova Assembly,unknown,,,,
-53,Obelisk Studio,unknown,,,,
-54,Outfit7,unknown,,,,
-55,Owlcat Games,unknown,,,,
-56,Pixonic,unknown,,,,
-57,Playkot,unknown,,,,
-58,Playrix,unknown,,,,
+46,Narhwal Accelerator,not_found,,,,Official accelerator site has no careers or vacancy list
+47,Nekki,found,https://nekki.com/,html,html_list,Official site contains We're hiring list and /vacancy/ detail pages
+48,New Folder Games,not_found,,,,Official site provides careers@newfolder.studio only and no vacancy list
+49,Nexters (GDEV),found,https://www.nexters.com/en/about/alljobs/,html,html_list,Official Nexters All jobs page with current roles and detail pages
+50,Nice Plans Studio,not_found,,,,Official site has no careers or vacancy list
+51,Nival,found,https://nival.com/career/vacancies,html,html_list,Official Nival career opportunities page; currently explicitly says no Cyprus openings
+52,Nova Assembly,not_found,,,,Holding site has no own careers or vacancy list; hiring is handled by member studios
+53,Obelisk Studio,found,https://obeliskstd.com/careers,browser,js_rendered_html,Official site links to Careers; page requires browser rendering or is unreliable over simple HTTP
+54,Outfit7,found,https://outfit7.com/careers/jobs,html,html_list,Official careers jobs page with filters and current positions
+55,Owlcat Games,found,https://owlcat.games/careers,browser,js_rendered_html,Official careers page; open-position data is dynamically rendered
+56,Pixonic,found,https://careers.my.games/all,html,html_list,Pixonic is part of MY.GAMES; official parent careers contains War Robots roles and should be filtered to Pixonic/War Robots
+57,Playkot,found,https://playkot.com/jobs,html,html_list,Official Playkot careers page with open jobs and detail pages
+58,Playrix,found,https://playrix.com/job/open,browser,js_rendered_html,Official Playrix jobs section; vacancy list is dynamically rendered
 59,Polden Publishing,unknown,,,,
 60,Press Fire Games,unknown,,,,
 61,Qumaron,unknown,,,,
