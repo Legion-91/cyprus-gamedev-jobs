@@ -7,7 +7,7 @@ from pathlib import Path
 
 JOBS = Path("data/jobs.csv")
 TEMPLATE = Path("site/index.html")
-PUBLIC = Path("public")
+PUBLIC = Path("docs")
 
 
 def main() -> None:
