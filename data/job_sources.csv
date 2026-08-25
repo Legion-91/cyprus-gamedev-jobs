@@ -21,18 +21,18 @@ company_id,company,status,source_url,method,format,notes
 20,Domini Games,not_found,,,,Official site has no careers or vacancies source found
 21,Ducky,not_found,,,,Official playducky.com site has no careers or vacancies source found
 22,Easybrain (Miniclip),found,https://easybrain.com/careers,html,html_list,Official careers page with current job openings and detail pages
-23,Emotion Spark Studio,unknown,,,,
-24,Eschatology Entertainment,unknown,,,,
-25,ESDigital Games,unknown,,,,
-26,Game Gears (GDEV),unknown,,,,
-27,GDEV,unknown,,,,
-28,Gem Capital,unknown,,,,
-29,Green Grey Holding,unknown,,,,
-30,Guli Games,unknown,,,,
-31,HeroCraft,unknown,,,,
-32,HolyDay Studios,unknown,,,,
-33,Hot Siberians,unknown,,,,
-34,Hyperhug,unknown,,,,
+23,Emotion Spark Studio,not_found,,,,No first-party vacancy source found
+24,Eschatology Entertainment,not_found,,,,Official site mentions Careers but exposes no vacancy source URL; aggregators skipped
+25,ESDigital Games,not_found,,,,Official site has no careers or vacancy source found
+26,Game Gears (GDEV),not_found,,,,Official site is under redevelopment and exposes no vacancy source; external job platforms skipped
+27,GDEV,not_found,,,,No first-party vacancy board found; external job platforms skipped
+28,Gem Capital,not_found,,,,Official investment site has no careers or vacancy source found
+29,Green Grey Holding,not_found,,,,Official site provides HR email only and no vacancy list
+30,Guli Games,found,https://www.guli-games.com/jobs,html,html_list,Official jobs page with current vacancies and detail pages
+31,HeroCraft,found,https://herocraft.com/en/company/career/,html,html_list,Official careers page with vacancy section
+32,HolyDay Studios,found,https://holydaygames.com/,html,html_list,Official site exposes open positions and job detail pages
+33,Hot Siberians,not_found,,,,Official site has no careers or vacancy source found
+34,Hyperhug,found,https://jobs.ashbyhq.com/hyperhug,ashby,json_api,Dedicated HyperHug Ashby board with current vacancies
 35,HypeTrain Digital,unknown,,,,
 36,Lesser Evil Games,unknown,,,,
 37,Light Hour Games (GDEV),unknown,,,,
