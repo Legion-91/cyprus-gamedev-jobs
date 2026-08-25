@@ -57,17 +57,17 @@ company_id,company,status,source_url,method,format,notes
 56,Pixonic,found,https://careers.my.games/all,html,html_list,Pixonic is part of MY.GAMES; official parent careers contains War Robots roles and should be filtered to Pixonic/War Robots
 57,Playkot,found,https://playkot.com/jobs,html,html_list,Official Playkot careers page with open jobs and detail pages
 58,Playrix,found,https://playrix.com/job/open,browser,js_rendered_html,Official Playrix jobs section; vacancy list is dynamically rendered
-59,Polden Publishing,unknown,,,,
-60,Press Fire Games,unknown,,,,
-61,Qumaron,unknown,,,,
-62,Rainstyle Games,unknown,,,,
-63,ReactGames Studio,unknown,,,,
-64,Red Brix Wall,unknown,,,,
-65,redux.games,unknown,,,,
-66,Reef Games Studio,unknown,,,,
-67,RetroStyle Games,unknown,,,,
-68,RJ Games (Nexters),unknown,,,,
-69,Say Games,unknown,,,,
+59,Polden Publishing,not_found,,,,Official Polden site has no careers or vacancy source found
+60,Press Fire Games,found,https://www.pressfire.com/career,html,html_list,Official career page with current vacancy list and detail pages
+61,Qumaron,not_found,,,,No first-party vacancy source found; external job platforms skipped
+62,Rainstyle Games,found,https://rainstylegames.com/careers/,html,contact_form,Official careers page; currently accepts general applications rather than listing named vacancies
+63,ReactGames Studio,found,https://react-games.studio/rgs_career,html,career_page,Official Career page has current jobs section and direct HR contact
+64,Red Brix Wall,not_found,,,,Official site has games and support only; no first-party vacancy source found
+65,redux.games,not_found,,,,Official site recruits via external LinkedIn link only; external platforms skipped
+66,Reef Games Studio,found,https://reefgames.ltd/,html,career_section,Official site has Careers section and application form; no separate vacancy board found
+67,RetroStyle Games,found,https://retrostylegames.com/careers/,html,html_list,Official careers page with multiple current vacancy cards and detail pages
+68,RJ Games (Nexters),found,https://rj-games.com/vacs,browser,js_rendered_html,Official Jobs page and job detail routes; JavaScript rendering required
+69,Say Games,found,https://say.games/jobs/,html,html_list,Official SayGames careers page with current positions and detail pages
 70,Shaman Games Studio,unknown,,,,
 71,Studio42,unknown,,,,
 72,Sunday Games,unknown,,,,
