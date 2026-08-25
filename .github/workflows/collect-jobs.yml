@@ -7,8 +7,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: collect-jobs
@@ -47,23 +45,14 @@ jobs:
       - name: Build mobile site
         run: python build_site.py
 
-      - name: Commit database changes
+      - name: Commit vacancies and site
         run: |
-          if ! git diff --quiet -- data/jobs.csv; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data/jobs.csv
-            git commit -m "Update vacancies"
-            git push
+          if git diff --quiet -- data/jobs.csv docs; then
+            echo "No changes"
+            exit 0
           fi
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload site
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: public
-
-      - name: Deploy site
-        uses: actions/deploy-pages@v4
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/jobs.csv docs
+          git commit -m "Update vacancies and mobile site"
+          git push
