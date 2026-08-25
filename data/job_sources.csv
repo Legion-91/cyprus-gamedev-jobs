@@ -68,14 +68,14 @@ company_id,company,status,source_url,method,format,notes
 67,RetroStyle Games,found,https://retrostylegames.com/careers/,html,html_list,Official careers page with multiple current vacancy cards and detail pages
 68,RJ Games (Nexters),found,https://rj-games.com/vacs,browser,js_rendered_html,Official Jobs page and job detail routes; JavaScript rendering required
 69,Say Games,found,https://say.games/jobs/,html,html_list,Official SayGames careers page with current positions and detail pages
-70,Shaman Games Studio,unknown,,,,
-71,Studio42,unknown,,,,
-72,Sunday Games,unknown,,,,
-73,Tamasenco,unknown,,,,
-74,Team Clout,unknown,,,,
-75,TrueMyth Games,unknown,,,,
-76,Unfrozen Studios,unknown,,,,
-77,VEA Games,unknown,,,,
-78,Wargaming Cyprus,unknown,,,,
-79,Weappy Studio,unknown,,,,
-80,XDevs,unknown,,,,
+70,Shaman Games Studio,not_found,,,,Official site has games and contacts only; no careers or vacancy source found
+71,Studio42,found,https://std42.com/vacancies,html,html_list,Official vacancies page titled OPEN JOBS AT STUDIO 42
+72,Sunday Games,found,https://sunday.games/careers/,html,html_list,Official careers page with named current vacancies and application email
+73,Tamasenco,found,https://tamasenco.com/careers/,html,html_list,Official careers page with current openings and full job descriptions
+74,Team Clout,found,https://clout.games/careers,browser,html_list,Official company careers URL referenced by Team Clout recruiting posts; current page may require browser or may be intermittently unavailable
+75,TrueMyth Games,found,https://truemythgames.com/,html,html_list,Official site has WE'RE HIRING and JOB OPENINGS section with job detail pages
+76,Unfrozen Studios,found,https://unfrozen.studio/jobs/,html,html_list,Official jobs page; currently explicitly says there are no open positions
+77,VEA Games,not_found,,,,Official site labels a Careers link but it resolves to the generic Contact page; current vacancies are only visible on external platforms which we skip
+78,Wargaming Cyprus,found,https://wargaming.com/en/careers/,html,html_list,Official Wargaming careers page with city filter and Nicosia Cyprus vacancies
+79,Weappy Studio,not_found,,,,Official site has company information and contact only; no careers or vacancy source found
+80,XDevs,not_found,,,,Official site exposes company and support information but no careers or vacancy source found
