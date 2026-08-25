@@ -1,26 +1,26 @@
 company_id,company,status,source_url,method,format,notes
-1,101XP,found,https://newcorp.101xp.com/vacancies,html,html_list,Official 101XP vacancies page
-2,AB Games,found,https://ab-games.com/en/,html,html_list,Official site contains career filters and vacancy list
-3,Amrita Studio,found,https://amrita.studio/career,browser,html,Official career URL; anti-bot verification blocks simple HTTP access
-4,AppQuantum,found,https://appquantum.pinpointhq.com/,pinpoint,json_api,Official AppQuantum site links directly to Pinpoint careers
-5,Artstorm,found,https://artstorm.com/en-US/careers,html,html_list,Official careers page with job list and detail pages
+1,101XP,found,https://newcorp.101xp.com/vacancies,html,html_list,Official vacancies page; currently no named openings visible
+2,AB Games,found,https://ab-games.com/en/,html,html_list,Official site has current job links and detail pages
+3,Amrita Studio,found,https://amrita.studio/career,browser,html,Official career URL; anti-bot verification blocks simple access
+4,AppQuantum,found,https://appquantum.pinpointhq.com/,pinpoint,ats_html,Official AppQuantum Pinpoint board
+5,Artstorm,found,https://artstorm.com/en-US/careers,browser,js_rendered_html,Official careers list is dynamic; job detail pages are public
 6,Ascanio,unknown,,,,Company appears rebranded as Senera; current job source needs confirmation
 7,AtentGames,not_found,,,,Official site has Work with us text but no vacancy source or careers link found
 8,AurumDust,not_found,,,,Official site has no careers or vacancies source found
-9,Awem Games,found,https://awem.com/careers,html,js_rendered_html,Official careers page; vacancy content appears dynamically rendered
-10,Azur Games,found,https://azurgames.com/ru/jobs/,html,html_list,Official jobs page with filters and vacancy list
-11,Belka Games,found,https://job-boards.eu.greenhouse.io/tripledotstudios,greenhouse,json_api,Belka says vacancies moved to Tripledot; shared Greenhouse board must be filtered to studio Belka Games
-12,BIT.GAMES,found,https://bit.games/job,html,html_list,Official jobs page
-13,Burny Games,found,https://careers.burny.games/,html,html_list,Official careers site with job openings and detail pages
-14,Chillbase,found,https://chillbase.net/vacancies/,html,html_list,Official vacancies page with filters and detail pages
-15,Colossi Games,found,https://www.colossi.games/vacancies/,html,html_list,Official vacancies page; may legitimately contain no current openings
-16,Critical Reflex,found,https://criticalreflex.bamboohr.com/careers,bamboohr,html_list,Official jobs page links to BambooHR
-17,Cubic Games (Nexters),found,https://cubicgames.com/job/,html,html_list,Official job listing and detail pages
+9,Awem Games,found,https://awem.com/careers,browser,js_rendered_html,Official careers page; vacancy content is not exposed to simple crawler
+10,Azur Games,found,https://azurgames.com/ru/jobs/,html,html_list,Official jobs page with current vacancy links and detail pages
+11,Belka Games,found,https://job-boards.eu.greenhouse.io/tripledotstudios,greenhouse,ats_html,Belka hiring is on official Tripledot Greenhouse board and must be filtered to Belka Games
+12,BIT.GAMES,found,https://bit.games/job,html,html_list,Official jobs page exists but currently shows no clean active list and contains legacy content
+13,Burny Games,found,https://careers.burny.games/,browser,js_rendered_html,Official careers board is dynamic; public detail pages are available
+14,Chillbase,found,https://chillbase.net/vacancies/,html,html_list,Official vacancies page with current jobs and detail pages
+15,Colossi Games,found,https://www.colossi.games/vacancies/,html,html_list,Official vacancies page; currently no named openings visible
+16,Critical Reflex,found,https://criticalreflex.bamboohr.com/careers,bamboohr,ats_html,Official BambooHR careers source; current board was not readable by crawler
+17,Cubic Games (Nexters),found,https://cubicgames.com/job/,html,html_list,Official jobs page; currently explicitly shows zero jobs
 18,Cyril Megem (Nominia),not_found,,,,Warshift site identifies a one-person developer and exposes contact only; no vacancy source found
 19,DEUSCRAFT,not_found,,,,Official site only asks candidates to email resume and portfolio to HR; no vacancy list source found
 20,Domini Games,not_found,,,,Official site has no careers or vacancies source found
 21,Ducky,not_found,,,,Official playducky.com site has no careers or vacancies source found
-22,Easybrain (Miniclip),found,https://easybrain.com/careers,html,html_list,Official careers page with current job openings and detail pages
+22,Easybrain (Miniclip),found,https://easybrain.com/careers,html,html_list,Official careers page with current openings and detail pages
 23,Emotion Spark Studio,not_found,,,,No first-party vacancy source found
 24,Eschatology Entertainment,not_found,,,,Official site mentions Careers but exposes no vacancy source URL; aggregators skipped
 25,ESDigital Games,not_found,,,,Official site has no careers or vacancy source found
@@ -29,53 +29,53 @@ company_id,company,status,source_url,method,format,notes
 28,Gem Capital,not_found,,,,Official investment site has no careers or vacancy source found
 29,Green Grey Holding,not_found,,,,Official site provides HR email only and no vacancy list
 30,Guli Games,found,https://www.guli-games.com/jobs,html,html_list,Official jobs page with current vacancies and detail pages
-31,HeroCraft,found,https://herocraft.com/en/company/career/,html,html_list,Official careers page with vacancy section
-32,HolyDay Studios,found,https://holydaygames.com/,html,html_list,Official site exposes open positions and job detail pages
+31,HeroCraft,found,https://herocraft.com/en/company/career/,html,html_list,Official careers page; currently no named vacancies visible
+32,HolyDay Studios,found,https://holydaygames.com/careers,html,html_list,Official careers page with current named openings
 33,Hot Siberians,not_found,,,,Official site has no careers or vacancy source found
-34,Hyperhug,found,https://jobs.ashbyhq.com/hyperhug,ashby,json_api,Dedicated HyperHug Ashby board with current vacancies
-35,HypeTrain Digital,found,https://www.hypetraindigital.com/jobs,html,html_list,Official jobs page with current roles and application links
+34,Hyperhug,found,https://jobs.ashbyhq.com/hyperhug,ashby,ats_html,Dedicated Hyperhug Ashby board linked from official site
+35,HypeTrain Digital,found,https://www.hypetraindigital.com/jobs,html,inline_jobs,Official jobs page with current role descriptions inline
 36,Lesser Evil Games,not_found,,,,No first-party vacancy source confirmed for the GameDevMap company; similarly named external publisher not treated as the same employer
 37,Light Hour Games (GDEV),not_found,,,,Official site describes the team but exposes no careers or vacancy list
 38,Made on Earth Games,not_found,,,,Official site invites candidates to email jobs@madeonearth.games but exposes no vacancy list source
 39,MGVC (My.Games),not_found,,,,Official MGVC investor site exposes no careers or vacancy list
 40,MGVC Publishing (My.Games),not_found,,,,Official publishing page exposes no dedicated vacancy source; MY.GAMES group careers kept separate
 41,Mika Games,not_found,,,,Official site has no careers or vacancy list
-42,Mundfish,found,https://mundfish.com/en/careers,html,html_list,Official Mundfish careers page verified live with vacancy list and detail pages
-43,Mundfish Powerhouse,not_found,,,,Powerhouse is presented as a publishing/support initiative for external studios; no separate vacancy board found
-44,Murka Games,found,https://murka.com/#career,html,html_list,Official Murka site contains Career section and vacancy cards
-45,My.Games,found,https://careers.my.games/all,html,html_list,Official MY.GAMES careers site with current vacancy list and detail pages
+42,Mundfish,found,https://mundfish.com/en/careers,html,html_list,Official careers page verified live with vacancy list and detail pages
+43,Mundfish Powerhouse,not_found,,,,Powerhouse is a publishing and support initiative for external studios; no separate vacancy board found
+44,Murka Games,found,https://murka.com/#career,browser,js_rendered_html,Official career section exposes named roles but detail structure is not reliably crawlable
+45,My.Games,found,https://careers.my.games/all,html,html_list,Official MY.GAMES careers site with current vacancy list and numeric detail URLs
 46,Narhwal Accelerator,not_found,,,,Official accelerator site has no careers or vacancy list
-47,Nekki,found,https://nekki.com/,html,html_list,Official site contains We're hiring list and /vacancy/ detail pages
+47,Nekki,found,https://nekki.com/,html,html_list,Official site contains current hiring list and vacancy detail pages
 48,New Folder Games,not_found,,,,Official site provides careers@newfolder.studio only and no vacancy list
-49,Nexters (GDEV),found,https://www.nexters.com/en/about/alljobs/,html,html_list,Official Nexters All jobs page with current roles and detail pages
+49,Nexters (GDEV),found,https://www.nexters.com/en/about/alljobs/,browser,js_rendered_html,Official All jobs page; current items are not exposed to simple crawler
 50,Nice Plans Studio,not_found,,,,Official site has no careers or vacancy list
-51,Nival,found,https://nival.com/career/vacancies,html,html_list,Official Nival career opportunities page; currently explicitly says no Cyprus openings
+51,Nival,found,https://nival.com/career/vacancies,html,html_list,Official career page; currently explicitly says no Cyprus openings
 52,Nova Assembly,not_found,,,,Holding site has no own careers or vacancy list; hiring is handled by member studios
-53,Obelisk Studio,found,https://obeliskstd.com/careers,browser,js_rendered_html,Official site links to Careers; page requires browser rendering or is unreliable over simple HTTP
-54,Outfit7,found,https://outfit7.com/careers/jobs,html,html_list,Official careers jobs page with filters and current positions
-55,Owlcat Games,found,https://owlcat.games/careers,browser,js_rendered_html,Official careers page; open-position data is dynamically rendered
-56,Pixonic,found,https://careers.my.games/all,html,html_list,Pixonic is part of MY.GAMES; official parent careers contains War Robots roles and should be filtered to Pixonic/War Robots
-57,Playkot,found,https://playkot.com/jobs,html,html_list,Official Playkot careers page with open jobs and detail pages
-58,Playrix,found,https://playrix.com/job/open,browser,js_rendered_html,Official Playrix jobs section; vacancy list is dynamically rendered
+53,Obelisk Studio,found,https://obeliskstd.com/careers,browser,js_rendered_html,Official careers page; live crawler could not read it
+54,Outfit7,found,https://outfit7.com/careers/jobs,html,html_list,Official careers page with current positions and detailed job pages
+55,Owlcat Games,found,https://owlcat.games/careers,browser,js_rendered_html,Official careers page shows opening counts but job cards are dynamically rendered
+56,Pixonic,found,https://careers.my.games/all,html,parent_careers,Official MY.GAMES parent board; only explicit Pixonic or War Robots matches should be assigned to Pixonic
+57,Playkot,found,https://playkot.com/jobs,html,html_list,Official careers page with current jobs and detail pages
+58,Playrix,found,https://playrix.com/job/open,browser,js_rendered_html,Official Playrix jobs page; vacancy data is not exposed to simple crawler
 59,Polden Publishing,not_found,,,,Official Polden site has no careers or vacancy source found
-60,Press Fire Games,found,https://www.pressfire.com/career,html,html_list,Official career page with current vacancy list and detail pages
+60,Press Fire Games,found,https://www.pressfire.com/career,html,html_list,Official career page with current roles and detail pages
 61,Qumaron,not_found,,,,No first-party vacancy source found; external job platforms skipped
-62,Rainstyle Games,found,https://rainstylegames.com/careers/,html,contact_form,Official careers page; currently accepts general applications rather than listing named vacancies
-63,ReactGames Studio,found,https://react-games.studio/rgs_career,html,career_page,Official Career page has current jobs section and direct HR contact
+62,Rainstyle Games,found,https://rainstylegames.com/careers/,html,career_page,Official careers page; currently no named openings and only general application flow
+63,ReactGames Studio,found,https://react-games.studio/rgs_career,html,career_page,Official career page exists but current named jobs are not exposed in crawler
 64,Red Brix Wall,not_found,,,,Official site has games and support only; no first-party vacancy source found
 65,redux.games,not_found,,,,Official site recruits via external LinkedIn link only; external platforms skipped
-66,Reef Games Studio,found,https://reefgames.ltd/,html,career_section,Official site has Careers section and application form; no separate vacancy board found
-67,RetroStyle Games,found,https://retrostylegames.com/careers/,html,html_list,Official careers page with multiple current vacancy cards and detail pages
-68,RJ Games (Nexters),found,https://rj-games.com/vacs,browser,js_rendered_html,Official Jobs page and job detail routes; JavaScript rendering required
-69,Say Games,found,https://say.games/jobs/,html,html_list,Official SayGames careers page with current positions and detail pages
+66,Reef Games Studio,found,https://reefgames.ltd/,html,career_section,Official site has career application section; currently no named openings
+67,RetroStyle Games,found,https://retrostylegames.com/careers/,html,html_list,Official careers page with current vacancy links and detail pages
+68,RJ Games (Nexters),found,https://rj-games.com/vacs,browser,js_rendered_html,Official jobs page; current vacancy data is not exposed to simple crawler
+69,Say Games,found,https://saygameshr.global.huntflow.io/,huntflow,ats_html,Official SayGames careers page links directly to this Huntflow board
 70,Shaman Games Studio,not_found,,,,Official site has games and contacts only; no careers or vacancy source found
-71,Studio42,found,https://std42.com/vacancies,html,html_list,Official vacancies page titled OPEN JOBS AT STUDIO 42
-72,Sunday Games,found,https://sunday.games/careers/,html,html_list,Official careers page with named current vacancies and application email
-73,Tamasenco,found,https://tamasenco.com/careers/,html,html_list,Official careers page with current openings and full job descriptions
-74,Team Clout,found,https://clout.games/careers,browser,html_list,Official company careers URL referenced by Team Clout recruiting posts; current page may require browser or may be intermittently unavailable
-75,TrueMyth Games,found,https://truemythgames.com/,html,html_list,Official site has WE'RE HIRING and JOB OPENINGS section with job detail pages
+71,Studio42,found,https://std42.com/vacancies,html,html_list,Official vacancies page; currently no named openings visible
+72,Sunday Games,found,https://sunday.games/careers/,html,inline_jobs,Official careers page with named role descriptions inline
+73,Tamasenco,found,https://tamasenco.com/careers/,html,inline_jobs,Official careers page with current openings and full descriptions inline
+74,Team Clout,found,https://clout.games/careers,browser,js_rendered_html,Official careers URL; live crawler could not read the page
+75,TrueMyth Games,found,https://truemythgames.com/,html,html_list,Official site has Job Openings section and detailed vacancy pages; posting freshness must be checked
 76,Unfrozen Studios,found,https://unfrozen.studio/jobs/,html,html_list,Official jobs page; currently explicitly says there are no open positions
-77,VEA Games,not_found,,,,Official site labels a Careers link but it resolves to the generic Contact page; current vacancies are only visible on external platforms which we skip
-78,Wargaming Cyprus,found,https://wargaming.com/en/careers/,html,html_list,Official Wargaming careers page with city filter and Nicosia Cyprus vacancies
+77,VEA Games,not_found,,,,Official site labels a Careers link but it resolves to generic Contact page; external platforms skipped
+78,Wargaming Cyprus,found,https://wargaming.com/en/careers/office/nicosia/,html,html_list,Official Wargaming Nicosia office careers page with Cyprus vacancies and detail pages
 79,Weappy Studio,not_found,,,,Official site has company information and contact only; no careers or vacancy source found
 80,XDevs,not_found,,,,Official site exposes company and support information but no careers or vacancy source found
