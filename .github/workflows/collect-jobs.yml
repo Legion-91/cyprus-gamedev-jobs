@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: collect-jobs
@@ -29,14 +31,39 @@ jobs:
       - name: Collect vacancies
         run: python collect_jobs.py
 
+      - name: Remove retired Pixonic rows
+        run: |
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+          p=Path('data/jobs.csv')
+          if p.exists() and p.stat().st_size:
+              with p.open(encoding='utf-8', newline='') as f:
+                  r=csv.DictReader(f); fields=r.fieldnames; rows=[x for x in r if x.get('company')!='Pixonic']
+              with p.open('w', encoding='utf-8', newline='') as f:
+                  w=csv.DictWriter(f, fieldnames=fields); w.writeheader(); w.writerows(rows)
+          PY
+
+      - name: Build mobile site
+        run: python build_site.py
+
       - name: Commit database changes
         run: |
-          if git diff --quiet -- data/jobs.csv; then
-            echo "No job changes"
-            exit 0
+          if ! git diff --quiet -- data/jobs.csv; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/jobs.csv
+            git commit -m "Update vacancies"
+            git push
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/jobs.csv
-          git commit -m "Update vacancies"
-          git push
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Deploy site
+        uses: actions/deploy-pages@v4
