@@ -1,1 +1,1 @@
-company_id,company,title,location,url
+company_id,company,job_id,title,location,url,description,first_seen,last_seen,active
