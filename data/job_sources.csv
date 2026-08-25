@@ -33,17 +33,17 @@ company_id,company,status,source_url,method,format,notes
 32,HolyDay Studios,found,https://holydaygames.com/,html,html_list,Official site exposes open positions and job detail pages
 33,Hot Siberians,not_found,,,,Official site has no careers or vacancy source found
 34,Hyperhug,found,https://jobs.ashbyhq.com/hyperhug,ashby,json_api,Dedicated HyperHug Ashby board with current vacancies
-35,HypeTrain Digital,unknown,,,,
-36,Lesser Evil Games,unknown,,,,
-37,Light Hour Games (GDEV),unknown,,,,
-38,Made on Earth Games,unknown,,,,
-39,MGVC (My.Games),unknown,,,,
-40,MGVC Publishing (My.Games),unknown,,,,
-41,Mika Games,unknown,,,,
-42,Mundfish,unknown,,,,
-43,Mundfish Powerhouse,unknown,,,,
-44,Murka Games,unknown,,,,
-45,My.Games,unknown,,,,
+35,HypeTrain Digital,found,https://www.hypetraindigital.com/jobs,html,html_list,Official jobs page with current roles and application links
+36,Lesser Evil Games,not_found,,,,No first-party vacancy source confirmed for the GameDevMap company; similarly named external publisher not treated as the same employer
+37,Light Hour Games (GDEV),not_found,,,,Official site describes the team but exposes no careers or vacancy list
+38,Made on Earth Games,not_found,,,,Official site invites candidates to email jobs@madeonearth.games but exposes no vacancy list source
+39,MGVC (My.Games),not_found,,,,Official MGVC investor site exposes no careers or vacancy list
+40,MGVC Publishing (My.Games),not_found,,,,Official publishing page exposes no dedicated vacancy source; MY.GAMES group careers kept separate
+41,Mika Games,not_found,,,,Official site has no careers or vacancy list
+42,Mundfish,found,https://mundfish.com/en/careers,html,html_list,Official Mundfish careers page with current vacancy list and detail pages
+43,Mundfish Powerhouse,found,https://mundfish.com/en/careers,html,html_list,Same official organization and domain as Mundfish; no separate Powerhouse hiring source found
+44,Murka Games,found,https://murka.com/#career,html,html_list,Official Murka site contains Career section and vacancy cards
+45,My.Games,found,https://careers.my.games/all,html,html_list,Official MY.GAMES careers site with current vacancy list and detail pages
 46,Narhwal Accelerator,unknown,,,,
 47,Nekki,unknown,,,,
 48,New Folder Games,unknown,,,,
