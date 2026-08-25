@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111111">
+<title>Cyprus GameDev Jobs</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f5f5;color:#171717;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{max-width:760px;margin:auto;padding:20px 14px 50px}h1{font-size:28px;margin:8px 0 3px}.sub{color:#666;margin:0 0 18px}.controls{position:sticky;top:0;background:#f5f5f5;padding:8px 0 12px;z-index:2}.search,select{width:100%;font:inherit;border:1px solid #ddd;background:white;border-radius:12px;padding:13px 14px;margin-bottom:8px}.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.count{font-size:14px;color:#666;margin:5px 2px 10px}.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e6e6e6;border-radius:15px;padding:16px;margin:9px 0}.company{font-size:13px;font-weight:700;color:#666;margin-bottom:6px}.title{font-size:18px;font-weight:700;line-height:1.25}.meta{font-size:14px;color:#666;margin-top:9px;line-height:1.4}.new{display:inline-block;font-size:11px;font-weight:700;background:#e9e9e9;border-radius:6px;padding:3px 6px;margin-left:6px;vertical-align:2px}.empty{text-align:center;color:#777;padding:40px 10px}@media(max-width:480px){.wrap{padding-top:12px}h1{font-size:25px}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body><main class="wrap">
+<h1>Cyprus GameDev Jobs</h1><p class="sub">Вакансии игровых компаний Кипра</p>
+<div class="controls"><input id="q" class="search" placeholder="Поиск по вакансии, компании, локации"><div class="row"><select id="company"><option value="">Все компании</option></select><select id="age"><option value="">За всё время</option><option value="1">Новые за сутки</option><option value="3">Новые за 3 дня</option><option value="7">Новые за неделю</option></select></div></div>
+<div id="count" class="count"></div><div id="jobs"></div>
+</main>
+<script>
+let all=[];const $=id=>document.getElementById(id);const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function ageDays(d){if(!d)return 99999;return (Date.now()-new Date(d).getTime())/86400000}
+function dateLabel(d){if(!d)return'';let n=Math.floor(ageDays(d));if(n<=0)return'сегодня';if(n===1)return'вчера';return n+' дн. назад'}
+function render(){let q=$('q').value.trim().toLowerCase(),c=$('company').value,a=+$('age').value;let rows=all.filter(j=>(!c||j.company===c)&&(!a||ageDays(j.first_seen)<=a)&&(!q||[j.title,j.company,j.location].join(' ').toLowerCase().includes(q)));$('count').textContent='Найдено вакансий: '+rows.length;$('jobs').innerHTML=rows.length?rows.map(j=>`<a class="card" href="${esc(j.url)}" target="_blank" rel="noopener"><div class="company">${esc(j.company)}</div><div class="title">${esc(j.title)}${ageDays(j.first_seen)<=3?'<span class="new">NEW</span>':''}</div><div class="meta">${esc(j.location||'Локация не указана')}${j.first_seen?' · '+esc(dateLabel(j.first_seen)):''}</div></a>`).join(''):'<div class="empty">Ничего не найдено</div>'}
+fetch('jobs.json?v='+Date.now()).then(r=>r.json()).then(data=>{all=data;let cs=[...new Set(all.map(x=>x.company))].sort((a,b)=>a.localeCompare(b));$('company').innerHTML+=[...cs].map(c=>`<option>${esc(c)}</option>`).join('');render()}).catch(()=>{$('jobs').innerHTML='<div class="empty">Не удалось загрузить вакансии</div>'});
+['q','company','age'].forEach(id=>$(id).addEventListener(id==='q'?'input':'change',render));
+</script></body></html>
