@@ -16,65 +16,13 @@
 </main>
 <script>
 let all=[];const $=id=>document.getElementById(id);const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-
-const aliasGroups=[
-['producer','продюсер','product','продукт'],
-['artist','художник','designer','дизайнер','art'],
-['game designer','геймдизайнер','gameplay designer','level designer','level design','гейм дизайнер'],
-['developer','разработчик','engineer','инженер','programmer','программист'],
-['unity','unity3d'],
-['unreal','ue4','ue5','unreal engine'],
-['qa','quality assurance','tester','тестировщик','тестирование'],
-['analyst','analytics','аналитик','аналитика','data analyst','data'],
-['marketing','маркетинг','marketer','маркетолог','user acquisition','ua'],
-['community','community manager','комьюнити','сообщество'],
-['support','customer support','player support','поддержка'],
-['hr','human resources','recruiter','recruitment','рекрутер','рекрутинг','кадры'],
-['project manager','project','pm','проектный менеджер','менеджер проекта'],
-['product manager','product owner','продуктовый менеджер'],
-['2d','2d artist','2d художник'],
-['3d','3d artist','3d художник','modeler','modeller'],
-['animation','animator','аниматор','анимация'],
-['ui','ux','ui/ux','interface','интерфейс'],
-['vfx','visual effects','effects artist','эффекты'],
-['technical artist','tech artist','технический художник'],
-['sound','audio','sound designer','audio designer','звук','саунд дизайнер'],
-['writer','narrative','narrative designer','сценарист','нарратив'],
-['backend','back-end','server','серверный'],
-['frontend','front-end','client','клиентский'],
-['devops','sre','infrastructure','инфраструктура'],
-['lead','team lead','лид','руководитель'],
-['director','head','директор','руководитель'],
-['senior','старший'],
-['junior','младший','intern','internship','стажер','стажёр']
-];
-const aliasMap=new Map();
-aliasGroups.forEach(group=>group.forEach(term=>aliasMap.set(term,group)));
-
+const aliasGroups=[['producer','продюсер','product','продукт'],['artist','художник','designer','дизайнер','art'],['game designer','геймдизайнер','gameplay designer','level designer','level design','гейм дизайнер'],['developer','разработчик','engineer','инженер','programmer','программист'],['unity','unity3d'],['unreal','ue4','ue5','unreal engine'],['qa','quality assurance','tester','тестировщик','тестирование'],['analyst','analytics','аналитик','аналитика','data analyst','data'],['marketing','маркетинг','marketer','маркетолог','user acquisition','ua'],['community','community manager','комьюнити','сообщество'],['support','customer support','player support','поддержка'],['hr','human resources','recruiter','recruitment','рекрутер','рекрутинг','кадры'],['project manager','project','pm','проектный менеджер','менеджер проекта'],['product manager','product owner','продуктовый менеджер'],['2d','2d artist','2d художник'],['3d','3d artist','3d художник','modeler','modeller'],['animation','animator','аниматор','анимация'],['ui','ux','ui/ux','interface','интерфейс'],['vfx','visual effects','effects artist','эффекты'],['technical artist','tech artist','технический художник'],['sound','audio','sound designer','audio designer','звук','саунд дизайнер'],['writer','narrative','narrative designer','сценарист','нарратив'],['backend','back-end','server','серверный'],['frontend','front-end','client','клиентский'],['devops','sre','infrastructure','инфраструктура'],['lead','team lead','лид','руководитель'],['director','head','директор','руководитель'],['senior','старший'],['junior','младший','intern','internship','стажер','стажёр']];
+const aliasMap=new Map();aliasGroups.forEach(group=>group.forEach(term=>aliasMap.set(term,group)));
 function ageDays(d){if(!d)return 99999;return (Date.now()-new Date(d).getTime())/86400000}
 function dateLabel(d){if(!d)return'';let n=Math.floor(ageDays(d));if(n<=0)return'сегодня';if(n===1)return'вчера';return n+' дн. назад'}
-function normalize(s){return String(s||'').toLowerCase().replace(/ё/g,'е').replace(/[,_;|/]+/g,' ').replace(/\s+/g,' ').trim()}
-function expandQuery(q){
-  const normalized=normalize(q);
-  if(!normalized)return[];
-  const terms=new Set();
-  aliasGroups.forEach(group=>{
-    if(group.some(alias=>normalized.includes(normalize(alias)))) group.forEach(alias=>terms.add(normalize(alias)));
-  });
-  normalized.split(' ').filter(Boolean).forEach(word=>{
-    terms.add(word);
-    const group=aliasMap.get(word);
-    if(group)group.forEach(alias=>terms.add(normalize(alias)));
-  });
-  return [...terms];
-}
-function matchesSearch(job,q){
-  const terms=expandQuery(q);
-  if(!terms.length)return true;
-  const haystack=normalize([job.title,job.company,job.location].join(' '));
-  return terms.some(term=>haystack.includes(term));
-}
+function normalize(s){return String(s||'').toLowerCase().replace(/ё/g,'е').replace(/[,_;|\/]+/g,' ').replace(/\s+/g,' ').trim()}
+function expandQuery(q){const normalized=normalize(q);if(!normalized)return[];const terms=new Set();aliasGroups.forEach(group=>{if(group.some(alias=>normalized.includes(normalize(alias))))group.forEach(alias=>terms.add(normalize(alias)))});normalized.split(' ').filter(Boolean).forEach(word=>{terms.add(word);const group=aliasMap.get(word);if(group)group.forEach(alias=>terms.add(normalize(alias))});return[...terms]}
+function matchesSearch(job,q){const terms=expandQuery(q);if(!terms.length)return true;const haystack=normalize([job.title,job.company,job.location].join(' '));return terms.some(term=>haystack.includes(term))}
 function render(){let q=$('q').value,c=$('company').value,a=+$('age').value;let rows=all.filter(j=>(!c||j.company===c)&&(!a||ageDays(j.first_seen)<=a)&&matchesSearch(j,q));$('count').textContent='Найдено вакансий: '+rows.length;$('jobs').innerHTML=rows.length?rows.map(j=>`<a class="card" href="${esc(j.url)}" target="_blank" rel="noopener"><div class="company">${esc(j.company)}</div><div class="title">${esc(j.title)}${ageDays(j.first_seen)<=3?'<span class="new">NEW</span>':''}</div><div class="meta">${esc(j.location||'Локация не указана')}${j.first_seen?' · '+esc(dateLabel(j.first_seen)):''}</div></a>`).join(''):'<div class="empty">Ничего не найдено</div>'}
-fetch('jobs.json?v='+Date.now()).then(r=>r.json()).then(data=>{all=data;let cs=[...new Set(all.map(x=>x.company))].sort((a,b)=>a.localeCompare(b));$('company').innerHTML+=[...cs].map(c=>`<option>${esc(c)}</option>`).join('');render()}).catch(()=>{$('jobs').innerHTML='<div class="empty">Не удалось загрузить вакансии</div>'});
-['q','company','age'].forEach(id=>$(id).addEventListener(id==='q'?'input':'change',render));
+fetch('jobs.json?v='+Date.now()).then(r=>r.json()).then(data=>{all=data;let cs=[...new Set(all.map(x=>x.company))].sort((a,b)=>a.localeCompare(b));$('company').innerHTML+=[...cs].map(c=>`<option>${esc(c)}</option>`).join('');render()}).catch(()=>{$('jobs').innerHTML='<div class="empty">Не удалось загрузить вакансии</div>'});['q','company','age'].forEach(id=>$(id).addEventListener(id==='q'?'input':'change',render));
 </script></body></html>
