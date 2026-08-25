@@ -54,7 +54,6 @@ company_id,company,status,source_url,method,format,notes
 53,Obelisk Studio,found,https://obeliskstd.com/careers,browser,js_rendered_html,Official careers page; live crawler could not read it
 54,Outfit7,found,https://outfit7.com/careers/jobs,html,html_list,Official careers page with current positions and detailed job pages
 55,Owlcat Games,found,https://owlcat.games/careers,browser,js_rendered_html,Official careers page shows opening counts but job cards are dynamically rendered
-56,Pixonic,found,https://careers.my.games/all,html,parent_careers,Official MY.GAMES parent board; only explicit Pixonic or War Robots matches should be assigned to Pixonic
 57,Playkot,found,https://playkot.com/jobs,html,html_list,Official careers page with current jobs and detail pages
 58,Playrix,found,https://playrix.com/job/open,browser,js_rendered_html,Official Playrix jobs page; vacancy data is not exposed to simple crawler
 59,Polden Publishing,not_found,,,,Official Polden site has no careers or vacancy source found
