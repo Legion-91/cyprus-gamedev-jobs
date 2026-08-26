@@ -33,16 +33,21 @@ JOB_COLUMNS = [
 BAD_TITLES = {
     "jobs", "job", "careers", "career", "vacancies", "vacancy", "open positions",
     "all jobs", "apply", "apply now", "read more", "learn more", "join us",
-    "join our team", "work with us", "our vacancies", "current openings",
+    "join our team", "work with us", "our vacancies", "current openings", "games",
 }
 
 ROLE_WORDS = (
     "designer", "manager", "qa", "engineer", "developer", "artist", "producer",
-    "sound", "analyst", "marketing", "animator", "writer", "programmer",
+    "sound", "analyst", "marketing", "animator", "writer", "copywriter", "programmer",
     "director", "lead", "specialist", "recruiter", "product", "project",
-    "community", "support", "backend", "frontend", "devops", "unity", "unreal",
-    "game", "2d", "3d", "vfx", "technical", "accounting", "administrator",
+    "community", "support", "backend", "frontend", "fullstack", "devops", "unity", "unreal",
+    "2d", "3d", "vfx", "technical", "accounting", "administrator", "data scientist",
 )
+
+NAV_WORDS = {
+    "home", "about", "games", "careers", "career", "contact", "privacy", "cookie",
+    "policy", "policies", "menu", "partners", "partnership", "news", "blog",
+}
 
 
 def clean(v):
@@ -92,7 +97,21 @@ def is_role_text(text):
     t = clean(text).lower()
     if not t or t in BAD_TITLES or len(t) < 3 or len(t) > 180:
         return False
+    words = set(re.findall(r"[a-zа-я0-9+#/.]+", t, re.I))
+    if len(words & NAV_WORDS) >= 3:
+        return False
     return any(word in t for word in ROLE_WORDS)
+
+
+def valid_title(company, title):
+    t = clean(title)
+    low = t.lower()
+    if not t or low in BAD_TITLES or low == company.lower() or len(t) > 180:
+        return False
+    words = set(re.findall(r"[a-zа-я0-9+#/.]+", low, re.I))
+    if len(words & NAV_WORDS) >= 3:
+        return False
+    return is_role_text(t) or company in {"Critical Reflex", "Mundfish"}
 
 
 def same_host(a, b):
@@ -105,7 +124,6 @@ def candidate(company, base_url, href, text):
         return ""
     p = urlparse(url)
     path = p.path.rstrip("/")
-    text_l = clean(text).lower()
 
     if company == "Critical Reflex":
         return url if p.netloc == "criticalreflex.bamboohr.com" and path.startswith("/careers/") else ""
@@ -125,16 +143,10 @@ def candidate(company, base_url, href, text):
         return url if ("/job/" in path or "/jobs/" in path) and path not in {"/job/open", "/job"} else ""
     if company == "Owlcat Games":
         return url if "/careers/" in path and path != "/careers" else ""
-    if company == "Obelisk Studio":
-        return url if same_host(base_url, url) and ("career" in path.lower() or "job" in path.lower() or "vac" in path.lower()) and path != urlparse(base_url).path.rstrip("/") else ""
-    if company == "Murka Games":
-        return url if same_host(base_url, url) and ("career" in path.lower() or "job" in path.lower() or "vac" in path.lower()) and path not in {"", "/"} else ""
-    if company == "Awem Games":
-        return url if same_host(base_url, url) and ("career" in path.lower() or "job" in path.lower() or "vac" in path.lower()) and path != urlparse(base_url).path.rstrip("/") else ""
-    if company in {"Guli Games", "HolyDay Studios", "TrueMyth Games", "Team Clout"}:
-        if same_host(base_url, url) and ("job" in path.lower() or "career" in path.lower() or "vac" in path.lower()):
+    if company in {"Obelisk Studio", "Murka Games", "Awem Games", "Guli Games", "HolyDay Studios", "TrueMyth Games", "Team Clout"}:
+        if same_host(base_url, url) and any(x in path.lower() for x in ("career", "job", "vac")):
             return url
-    if is_role_text(text_l) and same_host(base_url, url):
+    if is_role_text(text) and same_host(base_url, url):
         return url
     return ""
 
@@ -144,10 +156,9 @@ def title_from_page(soup, fallback):
         node = soup.select_one(selector)
         if node:
             t = clean(node.get_text(" ", strip=True))
-            if t and t.lower() not in BAD_TITLES and len(t) <= 180:
+            if t and len(t) <= 180:
                 return t
-    t = clean(fallback)
-    return t if t.lower() not in BAD_TITLES and len(t) <= 180 else ""
+    return clean(fallback)
 
 
 def location_from_page(soup, text):
@@ -155,10 +166,12 @@ def location_from_page(soup, text):
         node = soup.select_one(selector)
         if node:
             v = clean(node.get_text(" ", strip=True))
-            if 1 < len(v) < 140:
+            if 1 < len(v) <= 80 and len(set(v.lower().split()) & NAV_WORDS) < 2:
                 return v
-    m = re.search(r"\b(Remote|Cyprus|Limassol|Nicosia|Yerevan|Abu Dhabi|Ukraine|EU|Europe|Worldwide)\b[^|]{0,70}", text, re.I)
-    return clean(m.group(0)) if m else ""
+    for label in ("Remote", "Cyprus", "Limassol", "Nicosia", "Yerevan", "Abu Dhabi", "Ukraine", "Europe", "Worldwide"):
+        if re.search(rf"\b{re.escape(label)}\b", text, re.I):
+            return label
+    return ""
 
 
 def inline_rows(company_id, company, source_url, soup):
@@ -167,7 +180,7 @@ def inline_rows(company_id, company, source_url, soup):
     selectors = "h1,h2,h3,h4,[class*=title],[class*=position],[class*=vacancy],[class*=job]"
     for node in soup.select(selectors):
         title = clean(node.get_text(" ", strip=True))
-        if not is_role_text(title):
+        if not valid_title(company, title):
             continue
         key = title.lower()
         if key in seen_titles:
@@ -214,7 +227,6 @@ def collect_company(page, source):
 
     soup = BeautifulSoup(page.content(), "html.parser")
     rows = []
-
     if company in INLINE_COMPANIES:
         rows.extend(inline_rows(company_id, company, source_url, soup))
 
@@ -250,9 +262,7 @@ def collect_company(page, source):
             if company == "Burny Games" and "hidden from public view" in text.lower():
                 continue
             title = title_from_page(detail_soup, anchor_text)
-            if not title or title.lower() in BAD_TITLES:
-                continue
-            if not is_role_text(title) and company not in {"Critical Reflex", "Mundfish"}:
+            if not valid_title(company, title):
                 continue
             rows.append({
                 "company_id": company_id,
@@ -266,11 +276,16 @@ def collect_company(page, source):
         except Exception as exc:
             print(f"DETAIL FAIL {company}: {url}: {type(exc).__name__}: {exc}")
 
+    # Deduplicate by normalized title. Prefer a real detail URL over the careers landing page.
     dedup = {}
+    source_canon = canonical(source_url)
     for row in rows:
-        if row["title"].lower() in BAD_TITLES:
+        if not valid_title(company, row["title"]):
             continue
-        dedup[row["job_id"]] = row
+        key = re.sub(r"\W+", " ", row["title"].lower()).strip()
+        prev = dedup.get(key)
+        if prev is None or (prev["url"] == source_canon and row["url"] != source_canon):
+            dedup[key] = row
     return list(dedup.values())
 
 
