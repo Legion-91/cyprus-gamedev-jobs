@@ -24,10 +24,15 @@ jobs:
           cache: pip
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
 
       - name: Collect vacancies
         run: python collect_jobs.py
+
+      - name: Collect dynamic career pages
+        run: python collect_browser_jobs.py
 
       - name: Remove retired Pixonic rows
         run: |
