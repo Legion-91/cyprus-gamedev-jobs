@@ -14,13 +14,15 @@ SOURCES = Path("data/job_sources.csv")
 JOBS = Path("data/jobs.csv")
 
 TARGET_COMPANIES = {
-    "Amrita Studio",
-    "Artstorm",
-    "Burny Games",
-    "Critical Reflex",
-    "Mundfish",
-    "Nexters (GDEV)",
-    "Owlcat Games",
+    "Amrita Studio", "Artstorm", "Awem Games", "Burny Games", "Critical Reflex",
+    "Guli Games", "HolyDay Studios", "HypeTrain Digital", "Mundfish", "Murka Games",
+    "Nexters (GDEV)", "Obelisk Studio", "Owlcat Games", "Playrix",
+    "ReactGames Studio", "RJ Games (Nexters)", "Sunday Games", "Tamasenco",
+    "Team Clout", "TrueMyth Games",
+}
+
+INLINE_COMPANIES = {
+    "HypeTrain Digital", "ReactGames Studio", "Sunday Games", "Tamasenco"
 }
 
 JOB_COLUMNS = [
@@ -29,14 +31,17 @@ JOB_COLUMNS = [
 ]
 
 BAD_TITLES = {
-    "jobs", "job", "careers", "career", "vacancies", "vacancy",
-    "open positions", "all jobs", "apply", "apply now", "read more",
+    "jobs", "job", "careers", "career", "vacancies", "vacancy", "open positions",
+    "all jobs", "apply", "apply now", "read more", "learn more", "join us",
+    "join our team", "work with us", "our vacancies", "current openings",
 }
 
 ROLE_WORDS = (
-    "designer", "manager", "qa", "engineer", "developer", "artist",
-    "producer", "sound", "analyst", "marketing", "animator", "writer",
-    "programmer", "director", "lead", "specialist", "recruiter",
+    "designer", "manager", "qa", "engineer", "developer", "artist", "producer",
+    "sound", "analyst", "marketing", "animator", "writer", "programmer",
+    "director", "lead", "specialist", "recruiter", "product", "project",
+    "community", "support", "backend", "frontend", "devops", "unity", "unreal",
+    "game", "2d", "3d", "vfx", "technical", "accounting", "administrator",
 )
 
 
@@ -57,8 +62,9 @@ def canonical(url):
     return p._replace(fragment="").geturl()
 
 
-def stable_id(company_id, url):
-    digest = hashlib.sha1(canonical(url).encode("utf-8")).hexdigest()[:20]
+def stable_id(company_id, url, title=""):
+    raw = canonical(url) + "|" + clean(title).lower()
+    digest = hashlib.sha1(raw.encode("utf-8")).hexdigest()[:20]
     return f"{company_id}:{digest}"
 
 
@@ -82,23 +88,29 @@ def save_jobs(rows):
         w.writerows(rows)
 
 
+def is_role_text(text):
+    t = clean(text).lower()
+    if not t or t in BAD_TITLES or len(t) < 3 or len(t) > 180:
+        return False
+    return any(word in t for word in ROLE_WORDS)
+
+
+def same_host(a, b):
+    return urlparse(a).netloc.lower() == urlparse(b).netloc.lower()
+
+
 def candidate(company, base_url, href, text):
     url = canonical(urljoin(base_url, href or ""))
     if not url:
         return ""
     p = urlparse(url)
     path = p.path.rstrip("/")
-    text = clean(text).lower()
+    text_l = clean(text).lower()
 
     if company == "Critical Reflex":
         return url if p.netloc == "criticalreflex.bamboohr.com" and path.startswith("/careers/") else ""
     if company == "Amrita Studio":
-        same_host = p.netloc.endswith("amrita.studio")
-        if same_host and path.startswith("/career/"):
-            return url
-        if same_host and any(k in text for k in ROLE_WORDS) and path not in {"", "/", "/career"}:
-            return url
-        return ""
+        return url if p.netloc.endswith("amrita.studio") and path.startswith("/career/") else ""
     if company == "Mundfish":
         return url if path.startswith("/en/careers/") and path not in {"/en/careers/projects"} else ""
     if company == "Artstorm":
@@ -107,23 +119,35 @@ def candidate(company, base_url, href, text):
         return url if "/jobs/" in path and not path.endswith("/new") else ""
     if company == "Nexters (GDEV)":
         return url if "vacancy=" in p.query else ""
+    if company == "RJ Games (Nexters)":
+        return url if ("/vacs/" in path or "/vac" in path) and path != "/vacs" else ""
+    if company == "Playrix":
+        return url if ("/job/" in path or "/jobs/" in path) and path not in {"/job/open", "/job"} else ""
     if company == "Owlcat Games":
-        if "/careers/" in path and path != "/careers":
+        return url if "/careers/" in path and path != "/careers" else ""
+    if company == "Obelisk Studio":
+        return url if same_host(base_url, url) and ("career" in path.lower() or "job" in path.lower() or "vac" in path.lower()) and path != urlparse(base_url).path.rstrip("/") else ""
+    if company == "Murka Games":
+        return url if same_host(base_url, url) and ("career" in path.lower() or "job" in path.lower() or "vac" in path.lower()) and path not in {"", "/"} else ""
+    if company == "Awem Games":
+        return url if same_host(base_url, url) and ("career" in path.lower() or "job" in path.lower() or "vac" in path.lower()) and path != urlparse(base_url).path.rstrip("/") else ""
+    if company in {"Guli Games", "HolyDay Studios", "TrueMyth Games", "Team Clout"}:
+        if same_host(base_url, url) and ("job" in path.lower() or "career" in path.lower() or "vac" in path.lower()):
             return url
-        if any(k in text for k in ROLE_WORDS):
-            return url if urlparse(url).netloc.endswith("owlcat.games") else ""
+    if is_role_text(text_l) and same_host(base_url, url):
+        return url
     return ""
 
 
 def title_from_page(soup, fallback):
-    for selector in ("h1", "[class*=title]", "[class*=position]"):
+    for selector in ("h1", "[class*=job-title]", "[class*=vacancy-title]", "[class*=position-title]", "[class*=title]"):
         node = soup.select_one(selector)
         if node:
             t = clean(node.get_text(" ", strip=True))
             if t and t.lower() not in BAD_TITLES and len(t) <= 180:
                 return t
     t = clean(fallback)
-    return t if t.lower() not in BAD_TITLES else ""
+    return t if t.lower() not in BAD_TITLES and len(t) <= 180 else ""
 
 
 def location_from_page(soup, text):
@@ -133,8 +157,47 @@ def location_from_page(soup, text):
             v = clean(node.get_text(" ", strip=True))
             if 1 < len(v) < 140:
                 return v
-    m = re.search(r"\b(Remote|Cyprus|Limassol|Nicosia|Yerevan|Abu Dhabi|Ukraine|EU \+ Non EU)\b[^\n]{0,80}", text, re.I)
+    m = re.search(r"\b(Remote|Cyprus|Limassol|Nicosia|Yerevan|Abu Dhabi|Ukraine|EU|Europe|Worldwide)\b[^|]{0,70}", text, re.I)
     return clean(m.group(0)) if m else ""
+
+
+def inline_rows(company_id, company, source_url, soup):
+    rows = []
+    seen_titles = set()
+    selectors = "h1,h2,h3,h4,[class*=title],[class*=position],[class*=vacancy],[class*=job]"
+    for node in soup.select(selectors):
+        title = clean(node.get_text(" ", strip=True))
+        if not is_role_text(title):
+            continue
+        key = title.lower()
+        if key in seen_titles:
+            continue
+        seen_titles.add(key)
+
+        container = node
+        for _ in range(4):
+            parent = container.parent
+            if not parent:
+                break
+            parent_text = clean(parent.get_text(" ", strip=True))
+            if 80 <= len(parent_text) <= 5000:
+                container = parent
+                break
+            container = parent
+
+        body = clean(container.get_text(" ", strip=True))
+        if len(body) < 40:
+            continue
+        rows.append({
+            "company_id": company_id,
+            "company": company,
+            "job_id": stable_id(company_id, source_url, title),
+            "title": title,
+            "location": location_from_page(container, body),
+            "url": canonical(source_url),
+            "description": body[:12000],
+        })
+    return rows
 
 
 def collect_company(page, source):
@@ -149,30 +212,30 @@ def collect_company(page, source):
         pass
     page.wait_for_timeout(3000)
 
+    soup = BeautifulSoup(page.content(), "html.parser")
+    rows = []
+
+    if company in INLINE_COMPANIES:
+        rows.extend(inline_rows(company_id, company, source_url, soup))
+
     anchors = page.locator("a").evaluate_all(
         "els => els.map(a => ({href:a.href, text:(a.innerText||a.textContent||'').trim()}))"
     )
-
     links = {}
     for a in anchors:
         url = candidate(company, source_url, a.get("href"), a.get("text"))
         if url:
             links[url] = clean(a.get("text"))
 
+    html = page.content()
     if company == "Nexters (GDEV)":
-        html = page.content()
         for m in re.findall(r"[?&]vacancy=([a-z0-9\-]+)", html, re.I):
-            url = source_url.split("?")[0] + "?vacancy=" + m
-            links[url] = ""
-
-    # BambooHR can render cards whose href is assigned only after scripts run.
+            links[source_url.split("?")[0] + "?vacancy=" + m] = ""
     if company == "Critical Reflex":
-        html = page.content()
         for m in re.findall(r"https://criticalreflex\.bamboohr\.com/careers/(\d+)", html):
             links[f"https://criticalreflex.bamboohr.com/careers/{m}"] = ""
 
-    rows = []
-    for url, anchor_text in list(links.items())[:100]:
+    for url, anchor_text in list(links.items())[:120]:
         try:
             page.goto(url, wait_until="domcontentloaded", timeout=45000)
             try:
@@ -180,23 +243,23 @@ def collect_company(page, source):
             except PlaywrightTimeoutError:
                 pass
             page.wait_for_timeout(900)
-            soup = BeautifulSoup(page.content(), "html.parser")
-            text = clean(soup.get_text(" ", strip=True))
+            detail_soup = BeautifulSoup(page.content(), "html.parser")
+            text = clean(detail_soup.get_text(" ", strip=True))
             if not text:
                 continue
             if company == "Burny Games" and "hidden from public view" in text.lower():
                 continue
-            title = title_from_page(soup, anchor_text)
-            if not title:
+            title = title_from_page(detail_soup, anchor_text)
+            if not title or title.lower() in BAD_TITLES:
                 continue
-            if title.lower() in BAD_TITLES or len(title) > 180:
+            if not is_role_text(title) and company not in {"Critical Reflex", "Mundfish"}:
                 continue
             rows.append({
                 "company_id": company_id,
                 "company": company,
-                "job_id": stable_id(company_id, url),
+                "job_id": stable_id(company_id, canonical(page.url), title),
                 "title": title,
-                "location": location_from_page(soup, text),
+                "location": location_from_page(detail_soup, text),
                 "url": canonical(page.url),
                 "description": text[:12000],
             })
@@ -205,6 +268,8 @@ def collect_company(page, source):
 
     dedup = {}
     for row in rows:
+        if row["title"].lower() in BAD_TITLES:
+            continue
         dedup[row["job_id"]] = row
     return list(dedup.values())
 
