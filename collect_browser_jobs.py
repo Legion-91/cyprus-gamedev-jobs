@@ -14,8 +14,10 @@ SOURCES = Path("data/job_sources.csv")
 JOBS = Path("data/jobs.csv")
 
 TARGET_COMPANIES = {
+    "Amrita Studio",
     "Artstorm",
     "Burny Games",
+    "Critical Reflex",
     "Mundfish",
     "Nexters (GDEV)",
     "Owlcat Games",
@@ -30,6 +32,12 @@ BAD_TITLES = {
     "jobs", "job", "careers", "career", "vacancies", "vacancy",
     "open positions", "all jobs", "apply", "apply now", "read more",
 }
+
+ROLE_WORDS = (
+    "designer", "manager", "qa", "engineer", "developer", "artist",
+    "producer", "sound", "analyst", "marketing", "animator", "writer",
+    "programmer", "director", "lead", "specialist", "recruiter",
+)
 
 
 def clean(v):
@@ -82,6 +90,15 @@ def candidate(company, base_url, href, text):
     path = p.path.rstrip("/")
     text = clean(text).lower()
 
+    if company == "Critical Reflex":
+        return url if p.netloc == "criticalreflex.bamboohr.com" and path.startswith("/careers/") else ""
+    if company == "Amrita Studio":
+        same_host = p.netloc.endswith("amrita.studio")
+        if same_host and path.startswith("/career/"):
+            return url
+        if same_host and any(k in text for k in ROLE_WORDS) and path not in {"", "/", "/career"}:
+            return url
+        return ""
     if company == "Mundfish":
         return url if path.startswith("/en/careers/") and path not in {"/en/careers/projects"} else ""
     if company == "Artstorm":
@@ -93,7 +110,7 @@ def candidate(company, base_url, href, text):
     if company == "Owlcat Games":
         if "/careers/" in path and path != "/careers":
             return url
-        if any(k in text for k in ("designer", "manager", "qa", "engineer", "developer", "artist", "producer", "sound")):
+        if any(k in text for k in ROLE_WORDS):
             return url if urlparse(url).netloc.endswith("owlcat.games") else ""
     return ""
 
@@ -130,7 +147,7 @@ def collect_company(page, source):
         page.wait_for_load_state("networkidle", timeout=12000)
     except PlaywrightTimeoutError:
         pass
-    page.wait_for_timeout(2500)
+    page.wait_for_timeout(3000)
 
     anchors = page.locator("a").evaluate_all(
         "els => els.map(a => ({href:a.href, text:(a.innerText||a.textContent||'').trim()}))"
@@ -142,12 +159,17 @@ def collect_company(page, source):
         if url:
             links[url] = clean(a.get("text"))
 
-    # Nexters sometimes renders vacancy URLs only after page scripts settle.
     if company == "Nexters (GDEV)":
         html = page.content()
         for m in re.findall(r"[?&]vacancy=([a-z0-9\-]+)", html, re.I):
             url = source_url.split("?")[0] + "?vacancy=" + m
             links[url] = ""
+
+    # BambooHR can render cards whose href is assigned only after scripts run.
+    if company == "Critical Reflex":
+        html = page.content()
+        for m in re.findall(r"https://criticalreflex\.bamboohr\.com/careers/(\d+)", html):
+            links[f"https://criticalreflex.bamboohr.com/careers/{m}"] = ""
 
     rows = []
     for url, anchor_text in list(links.items())[:100]:
@@ -157,7 +179,7 @@ def collect_company(page, source):
                 page.wait_for_load_state("networkidle", timeout=8000)
             except PlaywrightTimeoutError:
                 pass
-            page.wait_for_timeout(700)
+            page.wait_for_timeout(900)
             soup = BeautifulSoup(page.content(), "html.parser")
             text = clean(soup.get_text(" ", strip=True))
             if not text:
@@ -167,7 +189,6 @@ def collect_company(page, source):
             title = title_from_page(soup, anchor_text)
             if not title:
                 continue
-            # Avoid obvious listing/navigation false positives.
             if title.lower() in BAD_TITLES or len(title) > 180:
                 continue
             rows.append({
@@ -182,7 +203,6 @@ def collect_company(page, source):
         except Exception as exc:
             print(f"DETAIL FAIL {company}: {url}: {type(exc).__name__}: {exc}")
 
-    # Deduplicate by canonical URL.
     dedup = {}
     for row in rows:
         dedup[row["job_id"]] = row
@@ -217,7 +237,6 @@ def main():
         context.close()
         browser.close()
 
-    # Only deactivate an old company's rows after a non-empty successful browser result.
     for company_id in successful:
         for row in existing.values():
             if row.get("company_id") == company_id:
