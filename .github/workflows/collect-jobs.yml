@@ -2,6 +2,11 @@ name: Collect jobs
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/collect-jobs.yml'
   schedule:
     - cron: "17 5 * * *"
 
